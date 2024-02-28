@@ -6,13 +6,13 @@
 \alias{microbiomeComputations-package}
 \title{microbiomeComputations: Compute Results for Microbiome Analyses}
 \description{
-microbiomeComputations provides helper functions for performing common analyses on microbiome data. The results are available as json, or optionally in a `data.table`. This package is intended to be compliant with the API specified in the VEuPathDB EdaComputeService.
+microbiomeComputations provides helper functions for performing common analyses on microbiome data. The results are available as json, or optionally in a `data.table`. This package is intended to be compliant with the API specified in VEuPathDB/service-eda-compute.
 }
 \seealso{
 Useful links:
 \itemize{
-  \item \url{https://github.com/VEuPathDB/microbiomeComputations}
-  \item Report bugs at \url{https://github.com/VEuPathDB/microbiomeComputations/issues}
+  \item \url{https://github.com/microbiomeDB/microbiomeComputations}
+  \item Report bugs at \url{https://github.com/microbiomeDB/microbiomeComputations/issues}
 }
 
 }
