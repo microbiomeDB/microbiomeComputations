@@ -1,3 +1,8 @@
+
+<!-- badges: start -->
+  [![R-CMD-check](https://github.com/VEuPathDB/microbiomeComputations/workflows/R-CMD-check/badge.svg)](https://github.com/VEuPathDB/microbiomeComputations/actions)
+  <!-- badges: end -->
+
 # microbiomeComputations
 
 microbiomeComputations is an R package which provides helper functions for performing common analyses 
@@ -29,8 +34,3 @@ Please make sure to update unit tests as appropriate. If making a change that af
 
 ## License
 [Apache 2.0](https://www.apache.org/licenses/LICENSE-2.0.txt)
-
-
-<!-- badges: start -->
-  [![R-CMD-check](https://github.com/VEuPathDB/microbiomeComputations/workflows/R-CMD-check/badge.svg)](https://github.com/VEuPathDB/microbiomeComputations/actions)
-  <!-- badges: end -->
