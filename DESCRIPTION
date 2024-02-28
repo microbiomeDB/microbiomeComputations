@@ -32,8 +32,8 @@ Remotes:
     VEuPathDB/veupathUtils,
     zdk123/SpiecEasi
 LinkingTo: Rcpp
-URL: https://github.com/VEuPathDB/microbiomeComputations
-BugReports: https://github.com/VEuPathDB/microbiomeComputations/issues
+URL: https://github.com/microbiomeDB/microbiomeComputations
+BugReports: https://github.com/microbiomeDB/microbiomeComputations/issues
 Description: microbiomeComputations provides helper functions for performing common analyses on microbiome data. The results are available as json, or optionally in a `data.table`. This package is intended to be compliant with the API specified in the VEuPathDB EdaComputeService.
 License: Apache License (= 2.0)
 Encoding: UTF-8
