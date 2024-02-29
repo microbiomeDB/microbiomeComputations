@@ -12,6 +12,7 @@ Authors@R:
            email = "annsize@upenn.edu"))
 Imports:
     ape,
+    boot,
     data.table,
     DESeq2,
     Hmisc,
@@ -19,7 +20,7 @@ Imports:
     Maaslin2,
     methods,
     Rcpp (>= 0.11.0),
-    SpiecEasi,
+    SpiecEasi (>= 1.1.1),
     stringi,
     vegan,
     veupathUtils,

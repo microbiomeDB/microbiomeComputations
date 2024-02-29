@@ -14,7 +14,7 @@ selfCorrelationGeneric <- getGeneric("selfCorrelation", package = "veupathUtils"
 #' @param stdDevThreshold numeric threshold to filter features by standard deviation across samples
 #' @return a ComputeResult object
 #' @export
-setMethod("correlation", signature("AbundanceData", "missing"), 
+setMethod(correlationGeneric, signature("AbundanceData", "missing"), 
 function(data1, data2, method = c('spearman','pearson'), format  = c('ComputeResult', 'data.table'), verbose = c(TRUE, FALSE), proportionNonZeroThreshold = 0.5, varianceThreshold = 0, stdDevThreshold = 0) {
   
   format <- veupathUtils::matchArg(format)
@@ -53,7 +53,7 @@ function(data1, data2, method = c('spearman','pearson'), format  = c('ComputeRes
 #' @return ComputeResult object
 #' @import veupathUtils
 #' @export
-setMethod("selfCorrelation", signature("AbundanceData"), 
+setMethod(selfCorrelationGeneric, signature("AbundanceData"), 
 function(data, method = c('spearman','pearson','sparcc'), format = c('ComputeResult', 'data.table'), verbose = c(TRUE, FALSE), proportionNonZeroThreshold = 0.5, varianceThreshold = 0, stdDevThreshold = 0) {
   
   format <- veupathUtils::matchArg(format)
@@ -89,7 +89,7 @@ function(data, method = c('spearman','pearson','sparcc'), format = c('ComputeRes
 #' @return ComputeResult object
 #' @import veupathUtils
 #' @export
-setMethod("selfCorrelation", signature("SampleMetadata"), 
+setMethod(selfCorrelationGeneric, signature("SampleMetadata"), 
 function(data, method = c('spearman','pearson','sparcc'), format = c('ComputeResult', 'data.table'), verbose = c(TRUE, FALSE)) {
 
   format <- veupathUtils::matchArg(format)
@@ -122,7 +122,7 @@ function(data, method = c('spearman','pearson','sparcc'), format = c('ComputeRes
 #' @param stdDevThreshold numeric threshold to filter features by standard deviation across samples
 #' @return ComputeResult object
 #' @export
-setMethod("correlation", signature("AbundanceData", "AbundanceData"), 
+setMethod(correlationGeneric, signature("AbundanceData", "AbundanceData"), 
 function(data1, data2, method = c('spearman','pearson'), format = c('ComputeResult', 'data.table'), verbose = c(TRUE, FALSE), proportionNonZeroThreshold = 0.5, varianceThreshold = 0, stdDevThreshold = 0) {
   
   format <- veupathUtils::matchArg(format)
