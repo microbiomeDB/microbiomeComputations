@@ -34,7 +34,7 @@ function(data1, data2, method = c('spearman','pearson'), format  = c('ComputeRes
   if (format == 'data.table') {
     return(corrResult)
   } else {
-    result <- buildCorrelationComputeResult(corrResult, data1, data1@sampleMetadata, method, verbose)
+    result <- veupathUtils::buildCorrelationComputeResult(corrResult, data1, data1@sampleMetadata, method, verbose)
     return(result)
   }
 })
@@ -73,7 +73,7 @@ function(data, method = c('spearman','pearson','sparcc'), format = c('ComputeRes
   if (format == 'data.table') {
     return(corrResult)
   } else {
-    result <- buildCorrelationComputeResult(corrResult, data, NULL, method, verbose)
+    result <- veupathUtils::buildCorrelationComputeResult(corrResult, data, NULL, method, verbose)
     return(result)
   }  
 })
@@ -103,7 +103,7 @@ function(data, method = c('spearman','pearson','sparcc'), format = c('ComputeRes
   if (format == 'data.table') {
     return(corrResult)
   } else {
-    result <- buildCorrelationComputeResult(corrResult, data, NULL, method, verbose)
+    result <- veupathUtils::buildCorrelationComputeResult(corrResult, data, NULL, method, verbose)
     return(result)
   }
 })
@@ -163,7 +163,7 @@ function(data1, data2, method = c('spearman','pearson'), format = c('ComputeResu
   if (format == 'data.table') {
     return(corrResult)
   } else {
-    result <- buildCorrelationComputeResult(corrResult, data1, data2, method, verbose)
+    result <- veupathUtils::buildCorrelationComputeResult(corrResult, data1, data2, method, verbose)
     return(result)
   } 
 })
