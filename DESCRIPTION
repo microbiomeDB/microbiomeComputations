@@ -19,8 +19,9 @@ Imports:
     jsonlite,
     Maaslin2,
     methods,
+    microbiomeData,
     Rcpp (>= 0.11.0),
-    SpiecEasi (>= 1.1.1),
+    SpiecEasi,
     stringi,
     vegan,
     veupathUtils,
@@ -30,6 +31,7 @@ Depends:
     purrr,
     R (>= 2.10)
 Remotes:
+    microbiomeDB/microbiomeData,
     VEuPathDB/veupathUtils,
     zdk123/SpiecEasi
 LinkingTo: Rcpp
@@ -46,18 +48,13 @@ Suggests:
 Config/testthat/edition: 3
 Collate: 
     'RcppExports.R'
-    'class-SampleMetadata.R'
-    'class-AbundanceData.R'
-    'class-AbsoluteAbundanceData.R'
     'class-Comparator.R'
     'method-alphaDiv.R'
     'method-betaDiv.R'
     'method-correlation.R'
     'method-differentialAbundance.R'
     'method-rankedAbundance.R'
-    'methods-AbundanceData.R'
     'methods-Comparator.R'
-    'methods-SampleMetadata.R'
     'methods-json.R'
     'microbiomeComputations-package.R'
     'utils.R'

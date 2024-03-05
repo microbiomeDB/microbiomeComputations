@@ -103,6 +103,7 @@ setGeneric("deseq",
   signature = c("data", "comparator")
 )
 
+#' @importFrom microbiomeData AbsoluteAbundanceData
 setMethod("deseq", signature("AbsoluteAbundanceData", "Comparator"), function(data, comparator, verbose = c(TRUE, FALSE)) {
   recordIdColumn <- data@recordIdColumn
   ancestorIdColumns <- data@ancestorIdColumns

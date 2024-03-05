@@ -12,6 +12,7 @@
 #' @import data.table
 #' @importFrom methods new slot validObject
 #' @importFrom stats as.dist as.formula median quantile var
+#' @importFrom microbiomeData AbundanceData getAbundances getSampleMetadata
 #' @export
 setGeneric("alphaDiv",
   function(data, method = c('shannon','simpson','evenness'), verbose = c(TRUE, FALSE)) standardGeneric("alphaDiv"),
