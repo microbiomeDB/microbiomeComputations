@@ -290,7 +290,7 @@ test_that("correlation fails with improper inputs", {
   )
 
 
-  data <- microbiomeComputations::AbsoluteAbundanceData(
+  data <- microbiomeData::AbsoluteAbundanceData(
               data = counts,
               sampleMetadata = sampleMetadata,
               recordIdColumn = 'entity.SampleID')
