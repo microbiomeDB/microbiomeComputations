@@ -21,7 +21,7 @@ setGeneric("alphaDiv",
 
 #'@export 
 setMethod("alphaDiv", signature("AbundanceData"), function(data, method = c('shannon','simpson','evenness'), verbose = c(TRUE, FALSE)) {
-    df <- getAbundances(data, verbose = verbose)
+    df <- microbiomeData::getAbundances(data, verbose = verbose)
     recordIdColumn <- data@recordIdColumn
     ancestorIdColumns <- data@ancestorIdColumns
     allIdColumns <- c(recordIdColumn, ancestorIdColumns)

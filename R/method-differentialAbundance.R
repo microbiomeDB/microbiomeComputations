@@ -5,8 +5,8 @@ cleanComparatorVariable <- function(data, comparator, verbose = c(TRUE, FALSE)) 
 
   comparatorColName <- veupathUtils::getColName(comparator@variable@variableSpec)
   data <- removeIncompleteSamples(data, comparatorColName, verbose)
-  abundances <- getAbundances(data, verbose = verbose)
-  sampleMetadata <- getSampleMetadata(data)
+  abundances <- microbiomeData::getAbundances(data, verbose = verbose)
+  sampleMetadata <- microbiomeData::getSampleMetadata(data)
   recordIdColumn <- data@recordIdColumn
 
   veupathUtils::logWithTime(paste("Received abundance table with", nrow(abundances), "samples and", (ncol(abundances)-1), "taxa."), verbose)
@@ -108,7 +108,7 @@ setMethod("deseq", signature("AbsoluteAbundanceData", "Comparator"), function(da
   recordIdColumn <- data@recordIdColumn
   ancestorIdColumns <- data@ancestorIdColumns
   allIdColumns <- c(recordIdColumn, ancestorIdColumns)
-  sampleMetadata <- getSampleMetadata(data)
+  sampleMetadata <- microbiomeData::getSampleMetadata(data)
   comparatorColName <- veupathUtils::getColName(comparator@variable@variableSpec)
 
   # First, remove id columns and any columns that are all 0s.
@@ -178,7 +178,7 @@ setMethod("maaslin", signature("AbundanceData", "Comparator"), function(data, co
   recordIdColumn <- data@recordIdColumn
   ancestorIdColumns <- data@ancestorIdColumns
   allIdColumns <- c(recordIdColumn, ancestorIdColumns)
-  sampleMetadata <- getSampleMetadata(data)
+  sampleMetadata <- microbiomeData::getSampleMetadata(data)
   comparatorColName <- veupathUtils::getColName(comparator@variable@variableSpec)
   abundances <- data@data
 

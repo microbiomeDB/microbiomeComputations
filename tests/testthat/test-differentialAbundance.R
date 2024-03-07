@@ -16,7 +16,7 @@ test_that('differentialAbundance returns a correctly formatted data.table', {
     ))
 
 
-  testData <- microbiomeComputations::AbsoluteAbundanceData(
+  testData <- microbiomeData::AbsoluteAbundanceData(
               data = counts,
               sampleMetadata = SampleMetadata(
                 data = testSampleMetadata,
@@ -185,7 +185,7 @@ test_that("differentialAbundance can handle messy inputs", {
   testSampleMetadataMessy$entity.cat4[sample(1:nSamples, 50)] <- NA
 
 
-  testDataMessy <- microbiomeComputations::AbsoluteAbundanceData(
+  testDataMessy <- microbiomeData::AbsoluteAbundanceData(
               data = counts,
               sampleMetadata = SampleMetadata(
                 data = testSampleMetadataMessy,
@@ -321,7 +321,7 @@ test_that("differentialAbundance returns a ComputeResult with the correct slots"
   )
 
 
-  testData <- microbiomeComputations::AbsoluteAbundanceData(
+  testData <- microbiomeData::AbsoluteAbundanceData(
               data = counts,
               sampleMetadata = sampleMetadata,
               recordIdColumn = 'entity.SampleID')
@@ -375,7 +375,7 @@ test_that("differentialAbundance fails with improper inputs", {
   )
 
 
-  testData <- microbiomeComputations::AbsoluteAbundanceData(
+  testData <- microbiomeData::AbsoluteAbundanceData(
               data = counts,
               sampleMetadata = sampleMetadata,
               recordIdColumn = 'entity.SampleID')
@@ -444,7 +444,7 @@ test_that("differentialAbundance catches deseq errors", {
   )
 
   # Use only a few taxa
-  testData <- microbiomeComputations::AbsoluteAbundanceData(
+  testData <- microbiomeData::AbsoluteAbundanceData(
               data = counts[, c("entity.SampleID","entity.1174-901-12","entity.A2")],
               sampleMetadata = sampleMetadata,
               recordIdColumn = 'entity.SampleID')
@@ -471,12 +471,12 @@ test_that("differentialAbundance method Maaslin does stuff",{
   )
 
 
-  testCountsData <- microbiomeComputations::AbsoluteAbundanceData(
+  testCountsData <- microbiomeData::AbsoluteAbundanceData(
               data = counts,
               sampleMetadata = testSampleMetadata,
               recordIdColumn = 'entity.SampleID')
 
-  testData <- microbiomeComputations::AbundanceData(
+  testData <- microbiomeData::AbundanceData(
     data = df,
     sampleMetadata = testSampleMetadata,
     recordIdColumn = 'entity.SampleID'
@@ -538,7 +538,7 @@ test_that("toJSON for DifferentialAbundanceResult works",{
     "entity.binA" = rep(c("binA_a", "binA_b"), nSamples/2, replace=T)
     ))
 
-  testData <- microbiomeComputations::AbundanceData(
+  testData <- microbiomeData::AbundanceData(
     data = df,
     sampleMetadata = SampleMetadata(
                       data = testSampleMetadata,
@@ -600,7 +600,7 @@ test_that("The smallest pvalue we can get is our p value floor", {
     "entity.binA" = rep(c("binA_a", "binA_b"), nSamples/2, replace=T)
     ))
 
-  testData <- microbiomeComputations::AbsoluteAbundanceData(
+  testData <- microbiomeData::AbsoluteAbundanceData(
     data = counts,
     sampleMetadata = SampleMetadata(
       data = testSampleMetadata,
@@ -669,7 +669,7 @@ test_that("differentialAbundance fails if comparator has one value", {
     recordIdColumn ="entity.SampleID"
   )
 
-  testData <- microbiomeComputations::AbundanceData(
+  testData <- microbiomeData::AbundanceData(
     data = df,
     sampleMetadata = sampleMetadata,
     recordIdColumn = 'entity.SampleID'

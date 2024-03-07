@@ -15,7 +15,7 @@ test_that('correlation returns an appropriately structured result for abundance 
   )
 
 
-  data <- microbiomeComputations::AbundanceData(
+  data <- microbiomeData::AbundanceData(
               data = df,
               sampleMetadata = sampleMetadata,
               recordIdColumn = 'entity.SampleID')
@@ -53,7 +53,7 @@ test_that('correlation returns an appropriately structured result for abundance 
     recordIdColumn = "entity.SampleID"
   )
 
-  data <- microbiomeComputations::AbundanceData(
+  data <- microbiomeData::AbundanceData(
               data = df,
               sampleMetadata = sampleMetadata,
               recordIdColumn = 'entity.SampleID')
@@ -147,7 +147,7 @@ test_that("correlation returns an appropriately structured result for assay agai
     recordIdColumn = "entity.SampleID"
   )
 
-  data <- microbiomeComputations::AbundanceData(
+  data <- microbiomeData::AbundanceData(
               data = df,
               sampleMetadata = sampleMetadata,
               recordIdColumn = 'entity.SampleID')
@@ -201,12 +201,12 @@ test_that("correlation returns an appropriately structured result for assay vs a
     recordIdColumn = "entity.SampleID"
   )
 
-  data1 <- microbiomeComputations::AbundanceData(
+  data1 <- microbiomeData::AbundanceData(
               data = df1,
               sampleMetadata = sampleMetadata,
               recordIdColumn = 'entity.SampleID')
 
-  data2 <- microbiomeComputations::AbundanceData(
+  data2 <- microbiomeData::AbundanceData(
               data = df2,
               sampleMetadata = sampleMetadata,
               recordIdColumn = 'entity.SampleID')
@@ -251,7 +251,7 @@ test_that("correlation returns a ComputeResult with the correct slots" , {
   )
 
 
-  data <- microbiomeComputations::AbundanceData(
+  data <- microbiomeData::AbundanceData(
               data = df,
               sampleMetadata = sampleMetadata,
               recordIdColumn = 'entity.SampleID')
@@ -321,7 +321,7 @@ test_that("toJSON works as expected for the CorrelationResult class", {
   )
 
 
-  data <- microbiomeComputations::AbundanceData(
+  data <- microbiomeData::AbundanceData(
               data = df,
               sampleMetadata = sampleMetadata,
               recordIdColumn = 'entity.SampleID')

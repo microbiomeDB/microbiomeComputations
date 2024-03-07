@@ -2,7 +2,7 @@
 test_that('betaDiv returns a correctly formatted data.table', {
   
   df <- testOTU
-  data <- microbiomeComputations::AbundanceData(
+  data <- microbiomeData::AbundanceData(
               data = df,
               recordIdColumn = 'entity.SampleID')
 
@@ -27,7 +27,7 @@ test_that('betaDiv returns a correctly formatted data.table', {
   # With NAs
   nNAs <- 20
   df[sample(1:nrow(df), size=nNAs, replace = F), 2] <- NA
-  data <- microbiomeComputations::AbundanceData(
+  data <- microbiomeData::AbundanceData(
               data = df,
               recordIdColumn = 'entity.SampleID',
               imputeZero = FALSE,
@@ -35,7 +35,7 @@ test_that('betaDiv returns a correctly formatted data.table', {
 
   expect_error(betaDiv(data, method='jsd', verbose=F))  # all three methods err
 
-  data <- microbiomeComputations::AbundanceData(
+  data <- microbiomeData::AbundanceData(
               data = df,
               recordIdColumn = 'entity.SampleID')
 
@@ -51,7 +51,7 @@ test_that('betaDiv returns a correctly formatted data.table', {
 test_that("betaDiv returns a data.table with the correct attributes" , {
   
   df <- testOTU
-  data <- microbiomeComputations::AbundanceData(
+  data <- microbiomeData::AbundanceData(
               data = df,
               recordIdColumn = 'entity.SampleID')
   

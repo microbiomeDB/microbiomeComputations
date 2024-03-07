@@ -22,7 +22,7 @@ setGeneric("betaDiv",
 
 #'@export 
 setMethod("betaDiv", signature("AbundanceData"), function(data, method = c('bray','jaccard','jsd'), k = 2, verbose = c(TRUE, FALSE)) {
-    df <- getAbundances(data, verbose = verbose)
+    df <- microbiomeData::getAbundances(data, verbose = verbose)
     recordIdColumn <- data@recordIdColumn
     naToZero <- data@imputeZero
     ancestorIdColumns <- data@ancestorIdColumns

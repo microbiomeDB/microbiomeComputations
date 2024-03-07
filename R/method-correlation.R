@@ -26,8 +26,8 @@ function(data1, data2, method = c('spearman','pearson'), format  = c('ComputeRes
   data1 <- pruneFeatures(data1, predicateFactory('variance', varianceThreshold), verbose)
   data1 <- pruneFeatures(data1, predicateFactory('sd', stdDevThreshold), verbose)
   
-  abundances <- getAbundances(data1, FALSE, FALSE, verbose)
-  corrResult <- veupathUtils::correlation(abundances, getSampleMetadata(data1, TRUE, FALSE), method = method, format = 'data.table', verbose = verbose)
+  abundances <- microbiomeData::getAbundances(data1, FALSE, FALSE, verbose)
+  corrResult <- veupathUtils::correlation(abundances, microbiomeData::getSampleMetadata(data1, TRUE, FALSE), method = method, format = 'data.table', verbose = verbose)
 
   veupathUtils::logWithTime(paste("Received df table with", nrow(abundances), "samples and", (ncol(abundances)-1), "features with abundances."), verbose)
 
@@ -65,7 +65,7 @@ function(data, method = c('spearman','pearson','sparcc'), format = c('ComputeRes
   data <- pruneFeatures(data, predicateFactory('variance', varianceThreshold), verbose)
   data <- pruneFeatures(data, predicateFactory('sd', stdDevThreshold), verbose)
 
-  abundances <- getAbundances(data, FALSE, FALSE, verbose)
+  abundances <- microbiomeData::getAbundances(data, FALSE, FALSE, verbose)
   corrResult <- veupathUtils::correlation(abundances, method = method, format = 'data.table', verbose = verbose)
 
   veupathUtils::logWithTime(paste("Received df table with", nrow(abundances), "samples and", (ncol(abundances)-1), "features with abundances."), verbose)
@@ -96,7 +96,7 @@ function(data, method = c('spearman','pearson','sparcc'), format = c('ComputeRes
   method <- veupathUtils::matchArg(method)
   verbose <- veupathUtils::matchArg(verbose)
   
-  corrResult <- veupathUtils::correlation(getSampleMetadata(data, TRUE, FALSE), method = method, format = 'data.table', verbose = verbose)
+  corrResult <- veupathUtils::correlation(microbiomeData::getSampleMetadata(data, TRUE, FALSE), method = method, format = 'data.table', verbose = verbose)
 
   veupathUtils::logWithTime(paste("Received df table with", nrow(data), "samples and", (ncol(data)-1), "variables."), verbose)
 
@@ -137,10 +137,10 @@ function(data1, data2, method = c('spearman','pearson'), format = c('ComputeResu
   data2 <- pruneFeatures(data2, predicateFactory('variance', varianceThreshold), verbose)
   data2 <- pruneFeatures(data2, predicateFactory('sd', stdDevThreshold), verbose)
   
-  abundances1 <- getAbundances(data1, FALSE, TRUE, verbose)
-  abundances2 <- getAbundances(data2, FALSE, TRUE, verbose)
+  abundances1 <- microbiomeData::getAbundances(data1, FALSE, TRUE, verbose)
+  abundances2 <- microbiomeData::getAbundances(data2, FALSE, TRUE, verbose)
 
-  # empty samples removed from data by getAbundances, means we need to keep samples common to both datasets and remove ids
+  # empty samples removed from data by microbiomeData::getAbundances, means we need to keep samples common to both datasets and remove ids
   # get id col names
   recordIdColumn <- data1@recordIdColumn
   allIdColumns <- c(recordIdColumn, data1@ancestorIdColumns)

@@ -3,7 +3,7 @@ test_that('alphaDiv returns a correctly formatted data.table', {
 
   df <- testOTU
 
-  data <- microbiomeComputations::AbundanceData(
+  data <- microbiomeData::AbundanceData(
               data = df,
               recordIdColumn = 'entity.SampleID')
   
@@ -32,7 +32,7 @@ test_that('alphaDiv returns a correctly formatted data.table', {
   nNAs <- 20
   df[sample(1:nrow(df), size=nNAs, replace = F), 2] <- NA
 
-  data <- microbiomeComputations::AbundanceData(
+  data <- microbiomeData::AbundanceData(
               data = df,
               recordIdColumn = 'entity.SampleID',
               imputeZero = FALSE,
@@ -43,7 +43,7 @@ test_that('alphaDiv returns a correctly formatted data.table', {
   dt <- result@data
   expect_equal(sum(is.na(dt)), nNAs)
 
-  data <- microbiomeComputations::AbundanceData(
+  data <- microbiomeData::AbundanceData(
               data = df,
               recordIdColumn = 'entity.SampleID')
 
@@ -61,7 +61,7 @@ test_that("alphaDiv returns a ComputeResult with good ComputedVariableMetadata",
   
   df <- testOTU
 
-  data <- microbiomeComputations::AbundanceData(
+  data <- microbiomeData::AbundanceData(
               data = df,
               recordIdColumn = 'entity.SampleID')
   
@@ -102,7 +102,7 @@ test_that("alphaDiv fails gracefully", {
   df <- testOTU
   df$entity.Abiotrophia <- NA
 
-  data <- microbiomeComputations::AbundanceData(
+  data <- microbiomeData::AbundanceData(
               data = df,
               recordIdColumn = 'entity.SampleID',
               imputeZero = FALSE,
