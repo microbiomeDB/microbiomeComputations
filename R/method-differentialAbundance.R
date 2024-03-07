@@ -103,8 +103,7 @@ setGeneric("deseq",
   signature = c("data", "comparator")
 )
 
-#' @importFrom microbiomeData AbsoluteAbundanceData
-setMethod("deseq", signature("AbsoluteAbundanceData", "Comparator"), function(data, comparator, verbose = c(TRUE, FALSE)) {
+setMethod("deseq", signature("microbiomeData::AbsoluteAbundanceData", "Comparator"), function(data, comparator, verbose = c(TRUE, FALSE)) {
   recordIdColumn <- data@recordIdColumn
   ancestorIdColumns <- data@ancestorIdColumns
   allIdColumns <- c(recordIdColumn, ancestorIdColumns)
@@ -165,7 +164,7 @@ setMethod("deseq", signature("AbsoluteAbundanceData", "Comparator"), function(da
 })
 
 setMethod("deseq", signature("AbundanceData", "Comparator"), function(data, comparator, verbose = c(TRUE, FALSE)) {
-  stop("Please use the AbsoluteAbundanceData class with DESeq2.")
+  stop("Please use the microbiomeData::AbsoluteAbundanceData class with DESeq2.")
 })
 
 setGeneric("maaslin",
@@ -216,7 +215,7 @@ setMethod("maaslin", signature("AbundanceData", "Comparator"), function(data, co
 #'
 #' This function returns the fold change and associated p value for a differential abundance analysis comparing samples in two groups.
 #' 
-#' @param data AbsoluteAbundanceData object
+#' @param data microbiomeData::AbsoluteAbundanceData object
 #' @param comparator Comparator object specifying the variable and values or bins to be used in dividing samples into groups.
 #' @param method string defining the the differential abundance method. Accepted values are 'DESeq2' and 'Maaslin2'.
 #' @param pValueFloor numeric value that indicates the smallest p value that should be returned. 
