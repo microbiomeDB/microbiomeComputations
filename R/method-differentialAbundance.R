@@ -1,11 +1,11 @@
 # a helper, to reuse and separate some logic
-#' @importFrom microbiomeData SampleMetadata
+#' @importFrom microbiomeData SampleMetadata removeIncompleteSamples
 cleanComparatorVariable <- function(data, comparator, verbose = c(TRUE, FALSE)) {
   if (!inherits(data, 'AbundanceData')) stop("data must be of the AbundanceData class.")
   if (!inherits(comparator, 'Comparator')) stop("comparator must be of the Comparator class.")
 
   comparatorColName <- veupathUtils::getColName(comparator@variable@variableSpec)
-  data <- removeIncompleteSamples(data, comparatorColName, verbose)
+  data <- microbiomeData::removeIncompleteSamples(data, comparatorColName, verbose)
   abundances <- microbiomeData::getAbundances(data, verbose = verbose)
   sampleMetadata <- microbiomeData::getSampleMetadata(data)
   recordIdColumn <- data@recordIdColumn
