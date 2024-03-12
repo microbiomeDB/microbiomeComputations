@@ -2,6 +2,7 @@
 % Please edit documentation in R/method-differentialAbundance.R
 \name{differentialAbundance}
 \alias{differentialAbundance}
+\alias{differentialAbundance,AbundanceData,Comparator-method}
 \title{Differential abundance}
 \usage{
 differentialAbundance(
@@ -11,9 +12,17 @@ differentialAbundance(
   pValueFloor = P_VALUE_FLOOR,
   verbose = c(TRUE, FALSE)
 )
+
+\S4method{differentialAbundance}{AbundanceData,Comparator}(
+  data,
+  comparator,
+  method = c("DESeq", "Maaslin"),
+  pValueFloor = P_VALUE_FLOOR,
+  verbose = c(TRUE, FALSE)
+)
 }
 \arguments{
-\item{data}{AbsoluteAbundanceData object}
+\item{data}{microbiomeData::AbsoluteAbundanceData object}
 
 \item{comparator}{Comparator object specifying the variable and values or bins to be used in dividing samples into groups.}
 

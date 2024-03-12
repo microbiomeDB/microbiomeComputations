@@ -12,31 +12,29 @@ Authors@R:
            email = "annsize@upenn.edu"))
 Imports:
     ape,
-    boot,
     data.table,
     DESeq2,
-    Hmisc,
     jsonlite,
     Maaslin2,
     methods,
+    microbiomeData,
+    purrr,
     Rcpp (>= 0.11.0),
-    SpiecEasi (>= 1.1.1),
+    S4Vectors,
+    SpiecEasi,
     stringi,
     vegan,
     veupathUtils,
 Depends:
-    Maaslin2,
-    S4Vectors,
-    purrr,
     R (>= 2.10)
 Remotes:
-    VEuPathDB/veupathUtils,
-    zdk123/SpiecEasi
+    microbiomeDB/microbiomeData,
+    VEuPathDB/veupathUtils
 LinkingTo: Rcpp
 URL: https://github.com/microbiomeDB/microbiomeComputations
 BugReports: https://github.com/microbiomeDB/microbiomeComputations/issues
 Description: microbiomeComputations provides helper functions for performing common analyses on microbiome data. The results are available as json, or optionally in a `data.table`. This package is intended to be compliant with the API specified in VEuPathDB/service-eda-compute.
-License: Apache License (= 2.0)
+License: Apache License (>= 2)
 Encoding: UTF-8
 LazyData: true
 Roxygen: list(markdown = TRUE)
@@ -46,18 +44,13 @@ Suggests:
 Config/testthat/edition: 3
 Collate: 
     'RcppExports.R'
-    'class-SampleMetadata.R'
-    'class-AbundanceData.R'
-    'class-AbsoluteAbundanceData.R'
     'class-Comparator.R'
     'method-alphaDiv.R'
     'method-betaDiv.R'
     'method-correlation.R'
     'method-differentialAbundance.R'
     'method-rankedAbundance.R'
-    'methods-AbundanceData.R'
     'methods-Comparator.R'
-    'methods-SampleMetadata.R'
     'methods-json.R'
     'microbiomeComputations-package.R'
     'utils.R'

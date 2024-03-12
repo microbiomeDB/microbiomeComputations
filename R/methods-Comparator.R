@@ -6,12 +6,14 @@
 #' @param group String, either "groupA" or "groupB"
 #' @return charactor vector of labels from groupA or groupB
 #' @export
+#' @rdname Comparator-methods
 setGeneric("getGroupLabels",
   function(object, group = c("groupA", "groupB")) standardGeneric("getGroupLabels"),
   signature = c("object")
 )
 
-#'@export 
+#' @rdname Comparator-methods
+#' @aliases getGroupLabels,Comparator-method 
 setMethod("getGroupLabels", signature("Comparator"), function(object, group = c("groupA", "groupB")) {
   group <- veupathUtils::matchArg(group)
 

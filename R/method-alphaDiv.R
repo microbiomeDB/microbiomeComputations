@@ -12,15 +12,18 @@
 #' @import data.table
 #' @importFrom methods new slot validObject
 #' @importFrom stats as.dist as.formula median quantile var
+#' @importFrom microbiomeData AbsoluteAbundanceData AbundanceData getAbundances getSampleMetadata
+#' @rdname alphaDiv-methods
 #' @export
 setGeneric("alphaDiv",
   function(data, method = c('shannon','simpson','evenness'), verbose = c(TRUE, FALSE)) standardGeneric("alphaDiv"),
   signature = c("data")
 )
 
-#'@export 
+#' @rdname alphaDiv-methods
+#' @aliases alphaDiv,AbundanceData-method
 setMethod("alphaDiv", signature("AbundanceData"), function(data, method = c('shannon','simpson','evenness'), verbose = c(TRUE, FALSE)) {
-    df <- getAbundances(data, verbose = verbose)
+    df <- microbiomeData::getAbundances(data, verbose = verbose)
     recordIdColumn <- data@recordIdColumn
     ancestorIdColumns <- data@ancestorIdColumns
     allIdColumns <- c(recordIdColumn, ancestorIdColumns)

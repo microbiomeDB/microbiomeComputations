@@ -2,9 +2,12 @@
 % Please edit documentation in R/methods-Comparator.R
 \name{getGroupLabels}
 \alias{getGroupLabels}
+\alias{getGroupLabels,Comparator-method}
 \title{Get labels from a group in a Comparator}
 \usage{
 getGroupLabels(object, group = c("groupA", "groupB"))
+
+\S4method{getGroupLabels}{Comparator}(object, group = c("groupA", "groupB"))
 }
 \arguments{
 \item{object}{Comparator}

@@ -1,2 +1,3 @@
 ^\.github$
 maaslin_output
+^LICENSE\.md$

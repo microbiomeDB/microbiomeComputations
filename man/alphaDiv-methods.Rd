@@ -2,9 +2,16 @@
 % Please edit documentation in R/method-alphaDiv.R
 \name{alphaDiv}
 \alias{alphaDiv}
+\alias{alphaDiv,AbundanceData-method}
 \title{Alpha diversity}
 \usage{
 alphaDiv(
+  data,
+  method = c("shannon", "simpson", "evenness"),
+  verbose = c(TRUE, FALSE)
+)
+
+\S4method{alphaDiv}{AbundanceData}(
   data,
   method = c("shannon", "simpson", "evenness"),
   verbose = c(TRUE, FALSE)

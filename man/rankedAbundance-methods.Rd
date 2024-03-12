@@ -2,9 +2,17 @@
 % Please edit documentation in R/method-rankedAbundance.R
 \name{rankedAbundance}
 \alias{rankedAbundance}
+\alias{rankedAbundance,AbundanceData-method}
 \title{Ranked abundance}
 \usage{
 rankedAbundance(
+  data,
+  method = c("median", "max", "q3", "variance"),
+  cutoff = 10,
+  verbose = c(TRUE, FALSE)
+)
+
+\S4method{rankedAbundance}{AbundanceData}(
   data,
   method = c("median", "max", "q3", "variance"),
   cutoff = 10,

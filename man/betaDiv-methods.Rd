@@ -2,9 +2,17 @@
 % Please edit documentation in R/method-betaDiv.R
 \name{betaDiv}
 \alias{betaDiv}
+\alias{betaDiv,AbundanceData-method}
 \title{Beta diversity}
 \usage{
 betaDiv(
+  data,
+  method = c("bray", "jaccard", "jsd"),
+  k = 2,
+  verbose = c(TRUE, FALSE)
+)
+
+\S4method{betaDiv}{AbundanceData}(
   data,
   method = c("bray", "jaccard", "jsd"),
   k = 2,

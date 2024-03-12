@@ -1,12 +1,13 @@
 # a helper, to reuse and separate some logic
+#' @importFrom microbiomeData SampleMetadata removeIncompleteSamples
 cleanComparatorVariable <- function(data, comparator, verbose = c(TRUE, FALSE)) {
   if (!inherits(data, 'AbundanceData')) stop("data must be of the AbundanceData class.")
   if (!inherits(comparator, 'Comparator')) stop("comparator must be of the Comparator class.")
 
   comparatorColName <- veupathUtils::getColName(comparator@variable@variableSpec)
-  data <- removeIncompleteSamples(data, comparatorColName, verbose)
-  abundances <- getAbundances(data, verbose = verbose)
-  sampleMetadata <- getSampleMetadata(data)
+  data <- microbiomeData::removeIncompleteSamples(data, comparatorColName, verbose)
+  abundances <- microbiomeData::getAbundances(data, verbose = verbose)
+  sampleMetadata <- microbiomeData::getSampleMetadata(data)
   recordIdColumn <- data@recordIdColumn
 
   veupathUtils::logWithTime(paste("Received abundance table with", nrow(abundances), "samples and", (ncol(abundances)-1), "taxa."), verbose)
@@ -74,7 +75,7 @@ cleanComparatorVariable <- function(data, comparator, verbose = c(TRUE, FALSE)) 
     abundances <- abundances[get(recordIdColumn) %in% keepSamples, ]
 
     data@data <- abundances
-    data@sampleMetadata <- SampleMetadata(
+    data@sampleMetadata <- microbiomeData::SampleMetadata(
       data = sampleMetadata,
       recordIdColumn = data@sampleMetadata@recordIdColumn
     )
@@ -83,6 +84,15 @@ cleanComparatorVariable <- function(data, comparator, verbose = c(TRUE, FALSE)) 
     return(data)
 }
 
+#' Differential Abundance Result
+#' 
+#' A DifferentialAbundanceResult object contains the results of differential
+#'  abundance analysis.
+#' 
+#' @slot effectSizeLabel label for the effect size metric used. Default is 'log2(Fold Change)'.
+#' @slot statistics data frame containing the statistics
+#' @slot pValueFloor the p-value floor. Any p-values less than this will be set to this value.
+#' @slot adjustedPValueFloor the adjusted p-value floor. 
 #' @export
 DifferentialAbundanceResult <- setClass("DifferentialAbundanceResult", representation(
     effectSizeLabel = 'character',
@@ -107,7 +117,7 @@ setMethod("deseq", signature("AbsoluteAbundanceData", "Comparator"), function(da
   recordIdColumn <- data@recordIdColumn
   ancestorIdColumns <- data@ancestorIdColumns
   allIdColumns <- c(recordIdColumn, ancestorIdColumns)
-  sampleMetadata <- getSampleMetadata(data)
+  sampleMetadata <- microbiomeData::getSampleMetadata(data)
   comparatorColName <- veupathUtils::getColName(comparator@variable@variableSpec)
 
   # First, remove id columns and any columns that are all 0s.
@@ -164,7 +174,7 @@ setMethod("deseq", signature("AbsoluteAbundanceData", "Comparator"), function(da
 })
 
 setMethod("deseq", signature("AbundanceData", "Comparator"), function(data, comparator, verbose = c(TRUE, FALSE)) {
-  stop("Please use the AbsoluteAbundanceData class with DESeq2.")
+  stop("Please use the microbiomeData::AbsoluteAbundanceData class with DESeq2.")
 })
 
 setGeneric("maaslin",
@@ -177,7 +187,7 @@ setMethod("maaslin", signature("AbundanceData", "Comparator"), function(data, co
   recordIdColumn <- data@recordIdColumn
   ancestorIdColumns <- data@ancestorIdColumns
   allIdColumns <- c(recordIdColumn, ancestorIdColumns)
-  sampleMetadata <- getSampleMetadata(data)
+  sampleMetadata <- microbiomeData::getSampleMetadata(data)
   comparatorColName <- veupathUtils::getColName(comparator@variable@variableSpec)
   abundances <- data@data
 
@@ -215,7 +225,7 @@ setMethod("maaslin", signature("AbundanceData", "Comparator"), function(data, co
 #'
 #' This function returns the fold change and associated p value for a differential abundance analysis comparing samples in two groups.
 #' 
-#' @param data AbsoluteAbundanceData object
+#' @param data microbiomeData::AbsoluteAbundanceData object
 #' @param comparator Comparator object specifying the variable and values or bins to be used in dividing samples into groups.
 #' @param method string defining the the differential abundance method. Accepted values are 'DESeq2' and 'Maaslin2'.
 #' @param pValueFloor numeric value that indicates the smallest p value that should be returned. 
@@ -231,13 +241,15 @@ setMethod("maaslin", signature("AbundanceData", "Comparator"), function(data, co
 #' @importFrom purrr discard
 #' @useDynLib microbiomeComputations
 #' @export
+#' @rdname differentialAbundance-methods
 setGeneric("differentialAbundance",
   function(data, comparator, method = c('DESeq', 'Maaslin'), pValueFloor = P_VALUE_FLOOR, verbose = c(TRUE, FALSE)) standardGeneric("differentialAbundance"),
   signature = c("data", "comparator")
 )
 
 # this is consistent regardless of rel vs abs abund. the statistical methods will differ depending on that. 
-#'@export
+#' @rdname differentialAbundance-methods
+#' @aliases differentialAbundance,AbundanceData,Comparator-method
 setMethod("differentialAbundance", signature("AbundanceData", "Comparator"), function(data, comparator, method = c('DESeq', 'Maaslin'), pValueFloor = P_VALUE_FLOOR, verbose = c(TRUE, FALSE)) {
     data <- cleanComparatorVariable(data, comparator, verbose)
     recordIdColumn <- data@recordIdColumn
