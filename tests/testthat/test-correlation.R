@@ -3,7 +3,7 @@
 test_that('correlation returns an appropriately structured result for abundance data vs metadata', {
   df <- testOTU
   nSamples <- dim(df)[1]
-  sampleMetadata <- SampleMetadata(
+  sampleMetadata <- microbiomeData::SampleMetadata(
     data = data.frame(list(
       "entity.SampleID" = df[["entity.SampleID"]],
       "entity.contA" = rnorm(nSamples),
@@ -45,7 +45,7 @@ test_that('correlation returns an appropriately structured result for abundance 
 
 
   # with a single metadata var
-  sampleMetadata <- SampleMetadata(
+  sampleMetadata <- microbiomeData::SampleMetadata(
     data = data.frame(list(
       "entity.SampleID" = df[["entity.SampleID"]],
       "entity.contA" = rnorm(nSamples)
@@ -88,7 +88,7 @@ test_that('correlation returns an appropriately structured result for abundance 
 test_that("correlation returns an appropriately structured result for metadata vs metadata", {
   df <- testOTU
   nSamples <- dim(df)[1]
-  sampleMetadata <- SampleMetadata(
+  sampleMetadata <- microbiomeData::SampleMetadata(
     data = data.frame(list(
       "entity.SampleID" = df[["entity.SampleID"]],
       "entity.contA" = rnorm(nSamples),
@@ -136,7 +136,7 @@ test_that("correlation returns an appropriately structured result for assay agai
   df <- df[, c("entity.SampleID", keepCols), with = FALSE]
 
   nSamples <- dim(df)[1]
-  sampleMetadata <- SampleMetadata(
+  sampleMetadata <- microbiomeData::SampleMetadata(
     data = data.frame(list(
       "entity.SampleID" = df[["entity.SampleID"]],
       "entity.contA" = rnorm(nSamples),
@@ -190,7 +190,7 @@ test_that("correlation returns an appropriately structured result for assay vs a
   df1 <- testOTU[, 1:500]
   df2 <- testOTU[,c(1,501:909)]
   nSamples <- dim(df1)[1]
-  sampleMetadata <- SampleMetadata(
+  sampleMetadata <- microbiomeData::SampleMetadata(
     data = data.frame(list(
       "entity.SampleID" = df1[["entity.SampleID"]],
       "entity.contA" = rnorm(nSamples),
@@ -239,7 +239,7 @@ test_that("correlation returns a ComputeResult with the correct slots" , {
 
   df <- testOTU
   nSamples <- dim(df)[1]
-  sampleMetadata <- SampleMetadata(
+  sampleMetadata <- microbiomeData::SampleMetadata(
     data = data.frame(list(
       "entity.SampleID" = df[["entity.SampleID"]],
       "entity.contA" = rnorm(nSamples),
@@ -278,7 +278,7 @@ test_that("correlation fails with improper inputs", {
   counts <- round(df[, -c("entity.SampleID")]*1000) # make into "counts"
   counts[ ,entity.SampleID:= df$entity.SampleID]
   nSamples <- dim(df)[1]
-  sampleMetadata <- SampleMetadata(
+  sampleMetadata <- microbiomeData::SampleMetadata(
     data = data.frame(list(
       "entity.SampleID" = df[["entity.SampleID"]],
       "entity.binA" = sample(c("binA_a", "binA_b"), nSamples, replace=T),
@@ -310,7 +310,7 @@ test_that("toJSON works as expected for the CorrelationResult class", {
   
   df <- testOTU
   nSamples <- dim(df)[1]
-  sampleMetadata <- SampleMetadata(
+  sampleMetadata <- microbiomeData::SampleMetadata(
     data = data.frame(list(
       "entity.SampleID" = df[["entity.SampleID"]],
       "entity.contA" = rnorm(nSamples),
