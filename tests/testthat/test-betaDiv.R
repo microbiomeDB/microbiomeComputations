@@ -1,7 +1,11 @@
 # Tests for beta diversity functions
 test_that('betaDiv returns a correctly formatted data.table', {
   
+  testOTU_path <- testthat::test_path('testdata','testOTU.rda')
+  load(testOTU_path)
+
   df <- testOTU
+
   data <- microbiomeData::AbundanceData(
               data = df,
               recordIdColumn = 'entity.SampleID')
@@ -50,7 +54,11 @@ test_that('betaDiv returns a correctly formatted data.table', {
 
 test_that("betaDiv returns a data.table with the correct attributes" , {
   
+  testOTU_path <- testthat::test_path('testdata','testOTU.rda')
+  load(testOTU_path)
+
   df <- testOTU
+  
   data <- microbiomeData::AbundanceData(
               data = df,
               recordIdColumn = 'entity.SampleID')

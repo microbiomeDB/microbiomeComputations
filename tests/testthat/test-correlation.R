@@ -1,7 +1,12 @@
 # Tests for mbio specific correlation methods
 
 test_that('correlation returns an appropriately structured result for abundance data vs metadata', {
+  
+  testOTU_path <- testthat::test_path('testdata','testOTU.rda')
+  load(testOTU_path)
+
   df <- testOTU
+
   nSamples <- dim(df)[1]
   sampleMetadata <- microbiomeData::SampleMetadata(
     data = data.frame(list(
@@ -86,7 +91,12 @@ test_that('correlation returns an appropriately structured result for abundance 
 
 
 test_that("correlation returns an appropriately structured result for metadata vs metadata", {
+  
+  testOTU_path <- testthat::test_path('testdata','testOTU.rda')
+  load(testOTU_path)
+
   df <- testOTU
+
   nSamples <- dim(df)[1]
   sampleMetadata <- microbiomeData::SampleMetadata(
     data = data.frame(list(
@@ -128,7 +138,11 @@ test_that("correlation returns an appropriately structured result for metadata v
 
 test_that("correlation returns an appropriately structured result for assay against self", {
 
+  testOTU_path <- testthat::test_path('testdata','testOTU.rda')
+  load(testOTU_path)
+
   df <- testOTU
+
   #manually prefilter, so we can test on smaller data set w known column names
   predicate <- predicateFactory('proportionNonZero', 0.5)
   keepCols <- df[, lapply(.SD, predicate), .SDcols = colnames(df)[!(colnames(df) %in% "entity.SampleID")]]
@@ -187,6 +201,10 @@ test_that("correlation returns an appropriately structured result for assay agai
 })
 
 test_that("correlation returns an appropriately structured result for assay vs assay", {
+
+  testOTU_path <- testthat::test_path('testdata','testOTU.rda')
+  load(testOTU_path)
+
   df1 <- testOTU[, 1:500]
   df2 <- testOTU[,c(1,501:909)]
   nSamples <- dim(df1)[1]
@@ -237,7 +255,11 @@ test_that("correlation returns an appropriately structured result for assay vs a
 
 test_that("correlation returns a ComputeResult with the correct slots" , {
 
+  testOTU_path <- testthat::test_path('testdata','testOTU.rda')
+  load(testOTU_path)
+
   df <- testOTU
+
   nSamples <- dim(df)[1]
   sampleMetadata <- microbiomeData::SampleMetadata(
     data = data.frame(list(
@@ -274,7 +296,11 @@ test_that("correlation returns a ComputeResult with the correct slots" , {
 
 test_that("correlation fails with improper inputs", {
 
+  testOTU_path <- testthat::test_path('testdata','testOTU.rda')
+  load(testOTU_path)
+
   df <- testOTU
+  
   counts <- round(df[, -c("entity.SampleID")]*1000) # make into "counts"
   counts[ ,entity.SampleID:= df$entity.SampleID]
   nSamples <- dim(df)[1]
@@ -307,8 +333,11 @@ test_that("correlation fails with improper inputs", {
 
 test_that("toJSON works as expected for the CorrelationResult class", {
   
-  
+  testOTU_path <- testthat::test_path('testdata','testOTU.rda')
+  load(testOTU_path)
+
   df <- testOTU
+  
   nSamples <- dim(df)[1]
   sampleMetadata <- microbiomeData::SampleMetadata(
     data = data.frame(list(

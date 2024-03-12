@@ -1,6 +1,10 @@
 # Tests for alpha diversity functions
 test_that('alphaDiv returns a correctly formatted data.table', {
 
+
+  testOTU_path <- testthat::test_path('testdata','testOTU.rda')
+  load(testOTU_path)
+
   df <- testOTU
 
   data <- microbiomeData::AbundanceData(
@@ -59,6 +63,9 @@ test_that('alphaDiv returns a correctly formatted data.table', {
 
 test_that("alphaDiv returns a ComputeResult with good ComputedVariableMetadata", {
   
+  testOTU_path <- testthat::test_path('testdata','testOTU.rda')
+  load(testOTU_path)
+
   df <- testOTU
 
   data <- microbiomeData::AbundanceData(
@@ -99,7 +106,11 @@ test_that("alphaDiv returns a ComputeResult with good ComputedVariableMetadata",
 
 test_that("alphaDiv fails gracefully", {
 
+  testOTU_path <- testthat::test_path('testdata','testOTU.rda')
+  load(testOTU_path)
+
   df <- testOTU
+  
   df$entity.Abiotrophia <- NA
 
   data <- microbiomeData::AbundanceData(

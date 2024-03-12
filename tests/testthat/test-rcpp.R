@@ -32,7 +32,11 @@ test_that("microbiomeComputations jsd output matches phyloseq's", {
     return(results)
   }
 
+  testOTU_path <- testthat::test_path('testdata','testOTU.rda')
+  load(testOTU_path)
+
   df <- testOTU
+  
   sampleIdColumn <- "entity.SampleID"
 
   # Compute distance matrices and test for equality

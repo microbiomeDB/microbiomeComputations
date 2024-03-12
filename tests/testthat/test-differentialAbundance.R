@@ -2,7 +2,11 @@
 
 test_that('differentialAbundance returns a correctly formatted data.table', {
 
+  testOTU_path <- testthat::test_path('testdata','testOTU.rda')
+  load(testOTU_path)
+
   df <- testOTU
+  
   counts <- round(df[, -c("entity.SampleID")]*1000) # make into "counts"
   counts[ ,entity.SampleID:= df$entity.SampleID]
   nSamples <- dim(df)[1]
@@ -169,7 +173,11 @@ test_that('differentialAbundance returns a correctly formatted data.table', {
 
 test_that("differentialAbundance can handle messy inputs", {
 
+  testOTU_path <- testthat::test_path('testdata','testOTU.rda')
+  load(testOTU_path)
+
   df <- testOTU
+
   counts <- round(df[, -c("entity.SampleID")]*1000) # make into "counts"
   counts[ ,entity.SampleID:= df$entity.SampleID]
   nSamples <- dim(df)[1]
@@ -305,7 +313,11 @@ test_that("differentialAbundance can handle messy inputs", {
 
 test_that("differentialAbundance returns a ComputeResult with the correct slots" , {
 
+  testOTU_path <- testthat::test_path('testdata','testOTU.rda')
+  load(testOTU_path)
+
   df <- testOTU
+
   counts <- round(df[, -c("entity.SampleID")]*1000) # make into "counts"
   counts[ ,entity.SampleID:= df$entity.SampleID]
   nSamples <- dim(df)[1]
@@ -358,7 +370,11 @@ test_that("differentialAbundance returns a ComputeResult with the correct slots"
 
 test_that("differentialAbundance fails with improper inputs", {
 
+  testOTU_path <- testthat::test_path('testdata','testOTU.rda')
+  load(testOTU_path)
+
   df <- testOTU
+
   counts <- round(df[, -c("entity.SampleID")]*1000) # make into "counts"
   counts[ ,entity.SampleID:= df$entity.SampleID]
   nSamples <- dim(df)[1]
@@ -407,7 +423,11 @@ test_that("differentialAbundance fails with improper inputs", {
 
 test_that("differentialAbundance catches deseq errors", {
 
+  testOTU_path <- testthat::test_path('testdata','testOTU.rda')
+  load(testOTU_path)
+
   df <- testOTU
+
   counts <- round(df[, -c("entity.SampleID")]*1000) # make into "counts"
   counts[ ,entity.SampleID:= df$entity.SampleID]
   nSamples <- dim(df)[1]
@@ -455,7 +475,12 @@ test_that("differentialAbundance catches deseq errors", {
 })
 
 test_that("differentialAbundance method Maaslin does stuff",{
-    df <- testOTU
+  
+  testOTU_path <- testthat::test_path('testdata','testOTU.rda')
+  load(testOTU_path)
+
+  df <- testOTU
+
   counts <- round(df[, -c("entity.SampleID")]*1000)
   counts[ ,entity.SampleID:= df$entity.SampleID]
   nSamples <- dim(df)[1]
@@ -529,7 +554,12 @@ test_that("differentialAbundance method Maaslin does stuff",{
 })
 
 test_that("toJSON for DifferentialAbundanceResult works",{
+  
+  testOTU_path <- testthat::test_path('testdata','testOTU.rda')
+  load(testOTU_path)
+
   df <- testOTU
+
   nSamples <- dim(df)[1]
   df$entity.wowtaxa <- rep(c(0.01, 0.99), nSamples/2, replace=T) # will 'wow' us with its significance
   nSamples <- dim(df)[1]
@@ -589,7 +619,11 @@ test_that("toJSON for DifferentialAbundanceResult works",{
 
 test_that("The smallest pvalue we can get is our p value floor", {
 
+  testOTU_path <- testthat::test_path('testdata','testOTU.rda')
+  load(testOTU_path)
+
   df <- testOTU
+
   counts <- round(df[, -c("entity.SampleID")]*1000) # make into "counts"
   counts[ ,entity.SampleID:= df$entity.SampleID]
   nSamples <- dim(df)[1]
@@ -658,6 +692,9 @@ test_that("The smallest pvalue we can get is our p value floor", {
 })
 
 test_that("differentialAbundance fails if comparator has one value", {
+
+  testOTU_path <- testthat::test_path('testdata','testOTU.rda')
+  load(testOTU_path)
 
   df <- testOTU
   
