@@ -48,7 +48,3 @@ rankTaxa <- function(df, method=c('median','max','q3','variance')) {
     
     return(ranked)
 }
-
-isNAorZero <- function(x) {
-  return(is.na(x) | x == 0)
-}
