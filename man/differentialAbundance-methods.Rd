@@ -2,9 +2,18 @@
 % Please edit documentation in R/method-differentialAbundance.R
 \name{differentialAbundance}
 \alias{differentialAbundance}
+\alias{differentialAbundance,AbundanceData,Comparator-method}
 \title{Differential abundance}
 \usage{
 differentialAbundance(
+  data,
+  comparator,
+  method = c("DESeq", "Maaslin"),
+  pValueFloor = P_VALUE_FLOOR,
+  verbose = c(TRUE, FALSE)
+)
+
+\S4method{differentialAbundance}{AbundanceData,Comparator}(
   data,
   comparator,
   method = c("DESeq", "Maaslin"),

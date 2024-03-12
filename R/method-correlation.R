@@ -5,7 +5,8 @@ selfCorrelationGeneric <- getGeneric("selfCorrelation", package = "veupathUtils"
 #' 
 #' This function returns the correlation of all columns of an AbundanceData object with appropriate columns of a SampleMetadata object.
 #' 
-#' @param data1 AbundanceData object. Will correlate abundance variables with specified variables in data2
+#' @param data1 AbundanceData object.
+#' @param data2 An optional second AbundanceData object. Will correlate all columns of data1 with all columns of data2
 #' @param method string defining the type of correlation to run. The currently supported values are 'spearman' and 'pearson'
 #' @param format string defining the desired format of the result. The currently supported values are 'data.table' and 'ComputeResult'.
 #' @param verbose boolean indicating if timed logging is desired
@@ -14,6 +15,9 @@ selfCorrelationGeneric <- getGeneric("selfCorrelation", package = "veupathUtils"
 #' @param stdDevThreshold numeric threshold to filter features by standard deviation across samples
 #' @return a ComputeResult object
 #' @export
+#' @rdname correlation-methods
+#' @aliases correlation,AbundanceData,missing-method
+#' @importFrom veupathUtils correlation
 setMethod(correlationGeneric, signature("AbundanceData", "missing"), 
 function(data1, data2, method = c('spearman','pearson'), format  = c('ComputeResult', 'data.table'), verbose = c(TRUE, FALSE), proportionNonZeroThreshold = 0.5, varianceThreshold = 0, stdDevThreshold = 0) {
   
@@ -41,7 +45,8 @@ function(data1, data2, method = c('spearman','pearson'), format  = c('ComputeRes
 
 #' Self Correlation
 #'
-#' This function returns correlation coefficients for variables in one AbundanceData object against itself
+#' This function returns correlation coefficients for variables in one AbundanceData object against itself. It generally serves as a 
+#' convenience wrapper around veupathUtils::correlation.
 #' 
 #' @param data An AbundanceData object
 #' @param method string defining the type of correlation to run. The currently supported values are 'spearman','pearson' and 'sparcc'
@@ -53,6 +58,8 @@ function(data1, data2, method = c('spearman','pearson'), format  = c('ComputeRes
 #' @return ComputeResult object
 #' @import veupathUtils
 #' @export
+#' @rdname selfCorrelation-methods
+#' @aliases selfCorrelation,AbundanceData-method
 setMethod(selfCorrelationGeneric, signature("AbundanceData"), 
 function(data, method = c('spearman','pearson','sparcc'), format = c('ComputeResult', 'data.table'), verbose = c(TRUE, FALSE), proportionNonZeroThreshold = 0.5, varianceThreshold = 0, stdDevThreshold = 0) {
   
@@ -78,17 +85,8 @@ function(data, method = c('spearman','pearson','sparcc'), format = c('ComputeRes
   }  
 })
 
-#' Self Correlation
-#'
-#' This function returns correlation coefficients for variables in one SampleMetadata object against itself
-#' 
-#' @param data SampleMetadata object
-#' @param method string defining the type of correlation to run. The currently supported values are 'spearman', 'pearson' and 'sparcc'
-#' @param format string defining the desired format of the result. The currently supported values are 'data.table' and 'ComputeResult'.
-#' @param verbose boolean indicating if timed logging is desired
-#' @return ComputeResult object
-#' @import veupathUtils
-#' @export
+#' @rdname selfCorrelation-methods
+#' @aliases selfCorrelation,SampleMetadata-method
 setMethod(selfCorrelationGeneric, signature("SampleMetadata"), 
 function(data, method = c('spearman','pearson','sparcc'), format = c('ComputeResult', 'data.table'), verbose = c(TRUE, FALSE)) {
 
@@ -108,20 +106,8 @@ function(data, method = c('spearman','pearson','sparcc'), format = c('ComputeRes
   }
 })
 
-#' Correlation of two AbundanceData objects
-#' 
-#' This function returns the correlation of all columns of an AbundanceData object with appropriate columns of a second AbundanceData object.
-#' 
-#' @param data1 AbundanceData object. 
-#' @param data2 AbundanceData object.
-#' @param method string defining the type of correlation to run. The currently supported values are 'spearman' and 'pearson'
-#' @param format string defining the desired format of the result. The currently supported values are 'data.table' and 'ComputeResult'.
-#' @param verbose boolean indicating if timed logging is desired
-#' @param proportionNonZeroThreshold numeric threshold to filter features by proportion of non-zero values across samples
-#' @param varianceThreshold numeric threshold to filter features by variance across samples
-#' @param stdDevThreshold numeric threshold to filter features by standard deviation across samples
-#' @return ComputeResult object
-#' @export
+#' @rdname correlation-methods
+#' @aliases correlation,AbundanceData,AbundanceData-method
 setMethod(correlationGeneric, signature("AbundanceData", "AbundanceData"), 
 function(data1, data2, method = c('spearman','pearson'), format = c('ComputeResult', 'data.table'), verbose = c(TRUE, FALSE), proportionNonZeroThreshold = 0.5, varianceThreshold = 0, stdDevThreshold = 0) {
   

@@ -11,12 +11,14 @@
 #' @import data.table
 #' @importFrom S4Vectors SimpleList
 #' @export
+#' @rdname rankedAbundance-methods
 setGeneric("rankedAbundance",
   function(data, method = c('median','max','q3','variance'), cutoff=10, verbose = c(TRUE, FALSE)) standardGeneric("rankedAbundance"),
   signature = c("data")
 )
 
-#'@export 
+#' @rdname rankedAbundance-methods
+#' @aliases rankedAbundance,AbundanceData-method
 setMethod("rankedAbundance", signature("AbundanceData"), function(data, method = c('median','max','q3','variance'), cutoff=10, verbose = c(TRUE, FALSE)) {
     df <- microbiomeData::getAbundances(data, verbose = verbose)
     recordIdColumn <- data@recordIdColumn

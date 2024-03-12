@@ -14,13 +14,15 @@
 #' @import veupathUtils
 #' @import data.table
 #' @useDynLib microbiomeComputations
+#' @rdname betaDiv-methods
 #' @export
 setGeneric("betaDiv",
   function(data, method = c('bray','jaccard','jsd'), k = 2, verbose = c(TRUE, FALSE)) standardGeneric("betaDiv"),
   signature = c("data")
 )
 
-#'@export 
+#' @rdname betaDiv-methods
+#' @aliases betaDiv,AbundanceData-method
 setMethod("betaDiv", signature("AbundanceData"), function(data, method = c('bray','jaccard','jsd'), k = 2, verbose = c(TRUE, FALSE)) {
     df <- microbiomeData::getAbundances(data, verbose = verbose)
     recordIdColumn <- data@recordIdColumn

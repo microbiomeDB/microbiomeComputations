@@ -83,6 +83,15 @@ cleanComparatorVariable <- function(data, comparator, verbose = c(TRUE, FALSE)) 
     return(data)
 }
 
+#' Differential Abundance Result
+#' 
+#' A DifferentialAbundanceResult object contains the results of differential
+#'  abundance analysis.
+#' 
+#' @slot effectSizeLabel label for the effect size metric used. Default is 'log2(Fold Change)'.
+#' @slot statistics data frame containing the statistics
+#' @slot pValueFloor the p-value floor. Any p-values less than this will be set to this value.
+#' @slot adjustedPValueFloor the adjusted p-value floor. 
 #' @export
 DifferentialAbundanceResult <- setClass("DifferentialAbundanceResult", representation(
     effectSizeLabel = 'character',
@@ -231,13 +240,15 @@ setMethod("maaslin", signature("AbundanceData", "Comparator"), function(data, co
 #' @importFrom purrr discard
 #' @useDynLib microbiomeComputations
 #' @export
+#' @rdname differentialAbundance-methods
 setGeneric("differentialAbundance",
   function(data, comparator, method = c('DESeq', 'Maaslin'), pValueFloor = P_VALUE_FLOOR, verbose = c(TRUE, FALSE)) standardGeneric("differentialAbundance"),
   signature = c("data", "comparator")
 )
 
 # this is consistent regardless of rel vs abs abund. the statistical methods will differ depending on that. 
-#'@export
+#' @rdname differentialAbundance-methods
+#' @aliases differentialAbundance,AbundanceData,Comparator-method
 setMethod("differentialAbundance", signature("AbundanceData", "Comparator"), function(data, comparator, method = c('DESeq', 'Maaslin'), pValueFloor = P_VALUE_FLOOR, verbose = c(TRUE, FALSE)) {
     data <- cleanComparatorVariable(data, comparator, verbose)
     recordIdColumn <- data@recordIdColumn
