@@ -12,10 +12,8 @@ Authors@R:
            email = "annsize@upenn.edu"))
 Imports:
     ape,
-    boot,
     data.table,
     DESeq2,
-    Hmisc,
     jsonlite,
     Maaslin2,
     methods,
