@@ -18,6 +18,7 @@ selfCorrelationGeneric <- getGeneric("selfCorrelation", package = "veupathUtils"
 #' @rdname correlation-methods
 #' @aliases correlation,AbundanceData,missing-method
 #' @importFrom veupathUtils correlation
+#' @importFrom microbiomeData pruneFeatures
 setMethod(correlationGeneric, signature("AbundanceData", "missing"), 
 function(data1, data2, method = c('spearman','pearson'), format  = c('ComputeResult', 'data.table'), verbose = c(TRUE, FALSE), proportionNonZeroThreshold = 0.5, varianceThreshold = 0, stdDevThreshold = 0) {
   
@@ -26,9 +27,9 @@ function(data1, data2, method = c('spearman','pearson'), format  = c('ComputeRes
   verbose <- veupathUtils::matchArg(verbose)
   
   #prefilters applied
-  data1 <- pruneFeatures(data1, predicateFactory('proportionNonZero', proportionNonZeroThreshold), verbose)
-  data1 <- pruneFeatures(data1, predicateFactory('variance', varianceThreshold), verbose)
-  data1 <- pruneFeatures(data1, predicateFactory('sd', stdDevThreshold), verbose)
+  data1 <- microbiomeData::pruneFeatures(data1, predicateFactory('proportionNonZero', proportionNonZeroThreshold), verbose)
+  data1 <- microbiomeData::pruneFeatures(data1, predicateFactory('variance', varianceThreshold), verbose)
+  data1 <- microbiomeData::pruneFeatures(data1, predicateFactory('sd', stdDevThreshold), verbose)
   
   abundances <- microbiomeData::getAbundances(data1, FALSE, FALSE, verbose)
   corrResult <- veupathUtils::correlation(abundances, microbiomeData::getSampleMetadata(data1, TRUE, FALSE), method = method, format = 'data.table', verbose = verbose)
@@ -68,9 +69,9 @@ function(data, method = c('spearman','pearson','sparcc'), format = c('ComputeRes
   verbose <- veupathUtils::matchArg(verbose)
 
   #prefilters applied
-  data <- pruneFeatures(data, predicateFactory('proportionNonZero', proportionNonZeroThreshold), verbose)
-  data <- pruneFeatures(data, predicateFactory('variance', varianceThreshold), verbose)
-  data <- pruneFeatures(data, predicateFactory('sd', stdDevThreshold), verbose)
+  data <- microbiomeData::pruneFeatures(data, predicateFactory('proportionNonZero', proportionNonZeroThreshold), verbose)
+  data <- microbiomeData::pruneFeatures(data, predicateFactory('variance', varianceThreshold), verbose)
+  data <- microbiomeData::pruneFeatures(data, predicateFactory('sd', stdDevThreshold), verbose)
 
   abundances <- microbiomeData::getAbundances(data, FALSE, FALSE, verbose)
   corrResult <- veupathUtils::correlation(abundances, method = method, format = 'data.table', verbose = verbose)
@@ -116,12 +117,12 @@ function(data1, data2, method = c('spearman','pearson'), format = c('ComputeResu
   verbose <- veupathUtils::matchArg(verbose)
   
   #prefilters applied
-  data1 <- pruneFeatures(data1, predicateFactory('proportionNonZero', proportionNonZeroThreshold), verbose)
-  data1 <- pruneFeatures(data1, predicateFactory('variance', varianceThreshold), verbose)
-  data1 <- pruneFeatures(data1, predicateFactory('sd', stdDevThreshold), verbose)
-  data2 <- pruneFeatures(data2, predicateFactory('proportionNonZero', proportionNonZeroThreshold), verbose)
-  data2 <- pruneFeatures(data2, predicateFactory('variance', varianceThreshold), verbose)
-  data2 <- pruneFeatures(data2, predicateFactory('sd', stdDevThreshold), verbose)
+  data1 <- microbiomeData::pruneFeatures(data1, predicateFactory('proportionNonZero', proportionNonZeroThreshold), verbose)
+  data1 <- microbiomeData::pruneFeatures(data1, predicateFactory('variance', varianceThreshold), verbose)
+  data1 <- microbiomeData::pruneFeatures(data1, predicateFactory('sd', stdDevThreshold), verbose)
+  data2 <- microbiomeData::pruneFeatures(data2, predicateFactory('proportionNonZero', proportionNonZeroThreshold), verbose)
+  data2 <- microbiomeData::pruneFeatures(data2, predicateFactory('variance', varianceThreshold), verbose)
+  data2 <- microbiomeData::pruneFeatures(data2, predicateFactory('sd', stdDevThreshold), verbose)
   
   abundances1 <- microbiomeData::getAbundances(data1, FALSE, TRUE, verbose)
   abundances2 <- microbiomeData::getAbundances(data2, FALSE, TRUE, verbose)

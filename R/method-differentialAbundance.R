@@ -1,4 +1,5 @@
 # a helper, to reuse and separate some logic
+#' @importFrom microbiomeData SampleMetadata
 cleanComparatorVariable <- function(data, comparator, verbose = c(TRUE, FALSE)) {
   if (!inherits(data, 'AbundanceData')) stop("data must be of the AbundanceData class.")
   if (!inherits(comparator, 'Comparator')) stop("comparator must be of the Comparator class.")
@@ -74,7 +75,7 @@ cleanComparatorVariable <- function(data, comparator, verbose = c(TRUE, FALSE)) 
     abundances <- abundances[get(recordIdColumn) %in% keepSamples, ]
 
     data@data <- abundances
-    data@sampleMetadata <- SampleMetadata(
+    data@sampleMetadata <- microbiomeData::SampleMetadata(
       data = sampleMetadata,
       recordIdColumn = data@sampleMetadata@recordIdColumn
     )
