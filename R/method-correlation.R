@@ -1,6 +1,8 @@
 correlationGeneric <- getGeneric("correlation", package = "veupathUtils")
 selfCorrelationGeneric <- getGeneric("selfCorrelation", package = "veupathUtils")
 
+setClassUnion("missingOrNULL", c("missing", "NULL"))
+
 #' Correlation of abundance data and metadata
 #' 
 #' This function returns the correlation of all columns of an AbundanceData object with appropriate columns of a SampleMetadata object.
@@ -19,7 +21,7 @@ selfCorrelationGeneric <- getGeneric("selfCorrelation", package = "veupathUtils"
 #' @aliases correlation,AbundanceData,missing-method
 #' @importFrom veupathUtils correlation
 #' @importFrom microbiomeData pruneFeatures
-setMethod(correlationGeneric, signature("AbundanceData", "missing"), 
+setMethod(correlationGeneric, signature("AbundanceData", "missingOrNULL"), 
 function(data1, data2, method = c('spearman','pearson'), format  = c('ComputeResult', 'data.table'), verbose = c(TRUE, FALSE), proportionNonZeroThreshold = 0.5, varianceThreshold = 0, stdDevThreshold = 0) {
   
   format <- veupathUtils::matchArg(format)
@@ -74,7 +76,7 @@ function(data, method = c('spearman','pearson','sparcc'), format = c('ComputeRes
   data <- microbiomeData::pruneFeatures(data, predicateFactory('sd', stdDevThreshold), verbose)
 
   abundances <- microbiomeData::getAbundances(data, FALSE, FALSE, verbose)
-  corrResult <- veupathUtils::correlation(abundances, method = method, format = 'data.table', verbose = verbose)
+  corrResult <- veupathUtils::correlation(abundances, NULL, method = method, format = 'data.table', verbose = verbose)
 
   veupathUtils::logWithTime(paste("Received df table with", nrow(abundances), "samples and", (ncol(abundances)-1), "features with abundances."), verbose)
 
@@ -95,7 +97,7 @@ function(data, method = c('spearman','pearson','sparcc'), format = c('ComputeRes
   method <- veupathUtils::matchArg(method)
   verbose <- veupathUtils::matchArg(verbose)
   
-  corrResult <- veupathUtils::correlation(microbiomeData::getSampleMetadata(data, TRUE, FALSE), method = method, format = 'data.table', verbose = verbose)
+  corrResult <- veupathUtils::correlation(microbiomeData::getSampleMetadata(data, TRUE, FALSE), NULL, method = method, format = 'data.table', verbose = verbose)
 
   veupathUtils::logWithTime(paste("Received df table with", nrow(data), "samples and", (ncol(data)-1), "variables."), verbose)
 
