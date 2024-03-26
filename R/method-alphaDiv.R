@@ -12,7 +12,7 @@
 #' @import data.table
 #' @importFrom methods new slot validObject
 #' @importFrom stats as.dist as.formula median quantile var
-#' @importFrom microbiomeData AbsoluteAbundanceData AbundanceData getAbundances getSampleMetadata
+#' @importFrom microbiomeData AbsoluteAbundanceData AbundanceData getAbundances
 #' @rdname alphaDiv-methods
 #' @export
 setGeneric("alphaDiv",

@@ -2,7 +2,6 @@
 % Please edit documentation in R/method-correlation.R
 \name{selfCorrelation,AbundanceData-method}
 \alias{selfCorrelation,AbundanceData-method}
-\alias{selfCorrelation,SampleMetadata-method}
 \title{Self Correlation}
 \usage{
 \S4method{selfCorrelation}{AbundanceData}(
@@ -13,13 +12,6 @@
   proportionNonZeroThreshold = 0.5,
   varianceThreshold = 0,
   stdDevThreshold = 0
-)
-
-\S4method{selfCorrelation}{SampleMetadata}(
-  data,
-  method = c("spearman", "pearson", "sparcc"),
-  format = c("ComputeResult", "data.table"),
-  verbose = c(TRUE, FALSE)
 )
 }
 \arguments{
@@ -42,5 +34,5 @@ ComputeResult object
 }
 \description{
 This function returns correlation coefficients for variables in one AbundanceData object against itself. It generally serves as a
-convenience wrapper around veupathUtils::correlation.
+convenience wrapper around veupathUtils::correlation, with the exception that it additionally supports sparcc.
 }

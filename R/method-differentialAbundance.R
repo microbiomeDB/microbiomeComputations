@@ -1,5 +1,5 @@
 # a helper, to reuse and separate some logic
-#' @importFrom microbiomeData SampleMetadata removeIncompleteSamples
+#' @importFrom microbiomeData removeIncompleteSamples
 cleanComparatorVariable <- function(data, comparator, verbose = c(TRUE, FALSE)) {
   if (!inherits(data, 'AbundanceData')) stop("data must be of the AbundanceData class.")
   if (!inherits(comparator, 'Comparator')) stop("comparator must be of the Comparator class.")
@@ -7,7 +7,7 @@ cleanComparatorVariable <- function(data, comparator, verbose = c(TRUE, FALSE)) 
   comparatorColName <- veupathUtils::getColName(comparator@variable@variableSpec)
   data <- microbiomeData::removeIncompleteSamples(data, comparatorColName, verbose)
   abundances <- microbiomeData::getAbundances(data, verbose = verbose)
-  sampleMetadata <- microbiomeData::getSampleMetadata(data)
+  sampleMetadata <- veupathUtils::getSampleMetadata(data)
   recordIdColumn <- data@recordIdColumn
 
   veupathUtils::logWithTime(paste("Received abundance table with", nrow(abundances), "samples and", (ncol(abundances)-1), "taxa."), verbose)
@@ -75,7 +75,7 @@ cleanComparatorVariable <- function(data, comparator, verbose = c(TRUE, FALSE)) 
     abundances <- abundances[get(recordIdColumn) %in% keepSamples, ]
 
     data@data <- abundances
-    data@sampleMetadata <- microbiomeData::SampleMetadata(
+    data@sampleMetadata <- veupathUtils::SampleMetadata(
       data = sampleMetadata,
       recordIdColumn = data@sampleMetadata@recordIdColumn
     )
@@ -117,7 +117,7 @@ setMethod("deseq", signature("AbsoluteAbundanceData", "Comparator"), function(da
   recordIdColumn <- data@recordIdColumn
   ancestorIdColumns <- data@ancestorIdColumns
   allIdColumns <- c(recordIdColumn, ancestorIdColumns)
-  sampleMetadata <- microbiomeData::getSampleMetadata(data)
+  sampleMetadata <- veupathUtils::getSampleMetadata(data)
   comparatorColName <- veupathUtils::getColName(comparator@variable@variableSpec)
 
   # First, remove id columns and any columns that are all 0s.
@@ -187,7 +187,7 @@ setMethod("maaslin", signature("AbundanceData", "Comparator"), function(data, co
   recordIdColumn <- data@recordIdColumn
   ancestorIdColumns <- data@ancestorIdColumns
   allIdColumns <- c(recordIdColumn, ancestorIdColumns)
-  sampleMetadata <- microbiomeData::getSampleMetadata(data)
+  sampleMetadata <- veupathUtils::getSampleMetadata(data)
   comparatorColName <- veupathUtils::getColName(comparator@variable@variableSpec)
   abundances <- data@data
 

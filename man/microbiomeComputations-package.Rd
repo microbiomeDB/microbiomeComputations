@@ -12,6 +12,7 @@ microbiomeComputations provides helper functions for performing common analyses 
 Useful links:
 \itemize{
   \item \url{https://github.com/microbiomeDB/microbiomeComputations}
+  \item \url{https://microbiomedb.github.io/microbiomeComputations/}
   \item Report bugs at \url{https://github.com/microbiomeDB/microbiomeComputations/issues}
 }
 
