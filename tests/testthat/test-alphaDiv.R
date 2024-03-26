@@ -8,6 +8,7 @@ test_that('alphaDiv returns a correctly formatted data.table', {
   df <- testOTU
 
   data <- microbiomeData::AbundanceData(
+              name = 'testing',
               data = df,
               recordIdColumn = 'entity.SampleID')
   
@@ -37,10 +38,11 @@ test_that('alphaDiv returns a correctly formatted data.table', {
   df[sample(1:nrow(df), size=nNAs, replace = F), 2] <- NA
 
   data <- microbiomeData::AbundanceData(
+              name = 'testing',
               data = df,
               recordIdColumn = 'entity.SampleID',
               imputeZero = FALSE,
-              removeEmptySamples = FALSE
+              removeEmptyRecords = FALSE
   )
 
   result <- alphaDiv(data, method='shannon', verbose=F)  # vegan diversity sets output to NA if input has NA. See issue #187
@@ -48,6 +50,7 @@ test_that('alphaDiv returns a correctly formatted data.table', {
   expect_equal(sum(is.na(dt)), nNAs)
 
   data <- microbiomeData::AbundanceData(
+              name = 'testing',
               data = df,
               recordIdColumn = 'entity.SampleID')
 
@@ -69,6 +72,7 @@ test_that("alphaDiv returns a ComputeResult with good ComputedVariableMetadata",
   df <- testOTU
 
   data <- microbiomeData::AbundanceData(
+              name = 'testing',
               data = df,
               recordIdColumn = 'entity.SampleID')
   
@@ -114,10 +118,11 @@ test_that("alphaDiv fails gracefully", {
   df$entity.Abiotrophia <- NA
 
   data <- microbiomeData::AbundanceData(
+              name = 'testing',
               data = df,
               recordIdColumn = 'entity.SampleID',
               imputeZero = FALSE,
-              removeEmptySamples = FALSE)
+              removeEmptyRecords = FALSE)
 
   result <- alphaDiv(data, method='simpson', verbose=T)
   dt <- result@data
