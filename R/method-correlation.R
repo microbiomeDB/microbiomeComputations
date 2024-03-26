@@ -20,7 +20,7 @@ setClassUnion("missingOrNULL", c("missing", "NULL"))
 #' @rdname correlation-methods
 #' @aliases correlation,AbundanceData,missing-method
 #' @importFrom veupathUtils correlation
-#' @importFrom microbiomeData pruneFeatures
+#' @importFrom veupathUtils pruneFeatures
 setMethod(correlationGeneric, signature("AbundanceData", "missingOrNULL"), 
 function(data1, data2, method = c('spearman','pearson'), format  = c('ComputeResult', 'data.table'), verbose = c(TRUE, FALSE), proportionNonZeroThreshold = 0.5, varianceThreshold = 0, stdDevThreshold = 0) {
   
@@ -29,12 +29,12 @@ function(data1, data2, method = c('spearman','pearson'), format  = c('ComputeRes
   verbose <- veupathUtils::matchArg(verbose)
   
   #prefilters applied
-  data1 <- microbiomeData::pruneFeatures(data1, predicateFactory('proportionNonZero', proportionNonZeroThreshold), verbose)
-  data1 <- microbiomeData::pruneFeatures(data1, predicateFactory('variance', varianceThreshold), verbose)
-  data1 <- microbiomeData::pruneFeatures(data1, predicateFactory('sd', stdDevThreshold), verbose)
+  data1 <- veupathUtils::pruneFeatures(data1, predicateFactory('proportionNonZero', proportionNonZeroThreshold), verbose)
+  data1 <- veupathUtils::pruneFeatures(data1, predicateFactory('variance', varianceThreshold), verbose)
+  data1 <- veupathUtils::pruneFeatures(data1, predicateFactory('sd', stdDevThreshold), verbose)
   
   abundances <- microbiomeData::getAbundances(data1, FALSE, FALSE, verbose)
-  corrResult <- veupathUtils::correlation(abundances, microbiomeData::getSampleMetadata(data1, TRUE, FALSE), method = method, format = 'data.table', verbose = verbose)
+  corrResult <- veupathUtils::correlation(abundances, veupathUtils::getSampleMetadata(data1, TRUE, FALSE), method = method, format = 'data.table', verbose = verbose)
 
   veupathUtils::logWithTime(paste("Received df table with", nrow(abundances), "samples and", (ncol(abundances)-1), "features with abundances."), verbose)
 
@@ -72,9 +72,9 @@ function(data, method = c('spearman','pearson','sparcc'), format = c('ComputeRes
   verbose <- veupathUtils::matchArg(verbose)
 
   #prefilters applied
-  data <- microbiomeData::pruneFeatures(data, predicateFactory('proportionNonZero', proportionNonZeroThreshold), verbose)
-  data <- microbiomeData::pruneFeatures(data, predicateFactory('variance', varianceThreshold), verbose)
-  data <- microbiomeData::pruneFeatures(data, predicateFactory('sd', stdDevThreshold), verbose)
+  data <- veupathUtils::pruneFeatures(data, predicateFactory('proportionNonZero', proportionNonZeroThreshold), verbose)
+  data <- veupathUtils::pruneFeatures(data, predicateFactory('variance', varianceThreshold), verbose)
+  data <- veupathUtils::pruneFeatures(data, predicateFactory('sd', stdDevThreshold), verbose)
 
   abundances <- microbiomeData::getAbundances(data, FALSE, FALSE, verbose)
   corrResult <- veupathUtils::correlation(abundances, NULL, method = method, format = 'data.table', verbose = verbose)
@@ -99,7 +99,7 @@ function(data, method = c('spearman','pearson','sparcc'), format = c('ComputeRes
   method <- veupathUtils::matchArg(method)
   verbose <- veupathUtils::matchArg(verbose)
   
-  corrResult <- veupathUtils::correlation(microbiomeData::getSampleMetadata(data, TRUE, FALSE), NULL, method = method, format = 'data.table', verbose = verbose)
+  corrResult <- veupathUtils::correlation(veupathUtils::getSampleMetadata(data, TRUE, FALSE), NULL, method = method, format = 'data.table', verbose = verbose)
 
   veupathUtils::logWithTime(paste("Received df table with", nrow(data), "samples and", (ncol(data)-1), "variables."), verbose)
 
@@ -122,12 +122,12 @@ function(data1, data2, method = c('spearman','pearson'), format = c('ComputeResu
   verbose <- veupathUtils::matchArg(verbose)
   
   #prefilters applied
-  data1 <- microbiomeData::pruneFeatures(data1, predicateFactory('proportionNonZero', proportionNonZeroThreshold), verbose)
-  data1 <- microbiomeData::pruneFeatures(data1, predicateFactory('variance', varianceThreshold), verbose)
-  data1 <- microbiomeData::pruneFeatures(data1, predicateFactory('sd', stdDevThreshold), verbose)
-  data2 <- microbiomeData::pruneFeatures(data2, predicateFactory('proportionNonZero', proportionNonZeroThreshold), verbose)
-  data2 <- microbiomeData::pruneFeatures(data2, predicateFactory('variance', varianceThreshold), verbose)
-  data2 <- microbiomeData::pruneFeatures(data2, predicateFactory('sd', stdDevThreshold), verbose)
+  data1 <- veupathUtils::pruneFeatures(data1, predicateFactory('proportionNonZero', proportionNonZeroThreshold), verbose)
+  data1 <- veupathUtils::pruneFeatures(data1, predicateFactory('variance', varianceThreshold), verbose)
+  data1 <- veupathUtils::pruneFeatures(data1, predicateFactory('sd', stdDevThreshold), verbose)
+  data2 <- veupathUtils::pruneFeatures(data2, predicateFactory('proportionNonZero', proportionNonZeroThreshold), verbose)
+  data2 <- veupathUtils::pruneFeatures(data2, predicateFactory('variance', varianceThreshold), verbose)
+  data2 <- veupathUtils::pruneFeatures(data2, predicateFactory('sd', stdDevThreshold), verbose)
   
   abundances1 <- microbiomeData::getAbundances(data1, FALSE, TRUE, verbose)
   abundances2 <- microbiomeData::getAbundances(data2, FALSE, TRUE, verbose)
