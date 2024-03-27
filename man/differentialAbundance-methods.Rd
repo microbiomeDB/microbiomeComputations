@@ -22,7 +22,7 @@ differentialAbundance(
 )
 }
 \arguments{
-\item{data}{microbiomeData::AbsoluteAbundanceData object}
+\item{data}{AbsoluteAbundanceData object}
 
 \item{comparator}{Comparator object specifying the variable and values or bins to be used in dividing samples into groups.}
 

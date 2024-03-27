@@ -32,7 +32,7 @@ function(data, method = c('spearman','pearson','sparcc'), format = c('ComputeRes
   data <- veupathUtils::pruneFeatures(data, predicateFactory('variance', varianceThreshold), verbose)
   data <- veupathUtils::pruneFeatures(data, predicateFactory('sd', stdDevThreshold), verbose)
 
-  abundances <- microbiomeData::getAbundances(data, FALSE, FALSE, verbose)
+  abundances <- getAbundances(data, FALSE, FALSE, verbose)
   corrResult <- veupathUtils::correlation(abundances, NULL, method = method, format = 'data.table', verbose = verbose)
 
   veupathUtils::logWithTime(paste("Received df table with", nrow(abundances), "samples and", (ncol(abundances)-1), "features with abundances."), verbose)

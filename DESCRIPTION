@@ -17,7 +17,6 @@ Imports:
     jsonlite,
     Maaslin2,
     methods,
-    microbiomeData,
     purrr,
     Rcpp (>= 0.11.0),
     S4Vectors,
@@ -28,7 +27,6 @@ Imports:
 Depends:
     R (>= 2.10)
 Remotes:
-    microbiomeDB/microbiomeData,
     VEuPathDB/veupathUtils
 LinkingTo: Rcpp
 URL: https://github.com/microbiomeDB/microbiomeComputations, https://microbiomedb.github.io/microbiomeComputations/
@@ -44,12 +42,15 @@ Suggests:
 Config/testthat/edition: 3
 Collate: 
     'RcppExports.R'
+    'class-AbundanceData.R'
+    'class-AbsoluteAbundanceData.R'
     'class-Comparator.R'
     'method-alphaDiv.R'
     'method-betaDiv.R'
     'method-correlation.R'
     'method-differentialAbundance.R'
     'method-rankedAbundance.R'
+    'methods-AbundanceData.R'
     'methods-Comparator.R'
     'methods-json.R'
     'microbiomeComputations-package.R'
