@@ -5,7 +5,7 @@ test_that('AbundanceData validation works', {
 
   df <- testOTU
   df[,1][10] <- -10
-  expect_error(microbiomeData::AbundanceData(
+  expect_error(AbundanceData(
               name = 'test',
               data = df,
               recordIdColumn = c('entity.SampleID')))
@@ -18,7 +18,7 @@ test_that("getAbundances works", {
 
   df <- testOTU
 
-  testing <- microbiomeData::AbundanceData(
+  testing <- AbundanceData(
     name = 'test',
     data = df,
     recordIdColumn = 'entity.SampleID'
@@ -36,7 +36,7 @@ test_that("getAbundances works", {
   ## remove empty samples
   df <- rbind(df,df[nrow(df)+1,])
   df$entity.SampleID[nrow(df)] <- 'im.a.sample'
-  testing <- microbiomeData::AbundanceData(
+  testing <- AbundanceData(
     name = 'test',
     data = df,
     recordIdColumn = 'entity.SampleID',

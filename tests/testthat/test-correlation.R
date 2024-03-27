@@ -25,7 +25,7 @@ test_that("correlation returns an appropriately structured result for assay agai
     recordIdColumn = "entity.SampleID"
   )
 
-  data <- microbiomeData::AbundanceData(
+  data <- AbundanceData(
               name = 'testing',
               data = df,
               sampleMetadata = sampleMetadata,

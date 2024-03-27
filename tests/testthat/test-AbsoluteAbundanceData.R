@@ -10,13 +10,13 @@ test_that('AbsoluteAbundanceData validation works', {
   counts[ ,entity.SampleID:= testOTU$entity.SampleID]
 
   # Expect error when input data is not integers (not rounded)
-  expect_error(microbiomeData::AbsoluteAbundanceData(
+  expect_error(AbsoluteAbundanceData(
               name = 'test',
               data = df,
               recordIdColumn = c('entity.SampleID')))
 
   
-  testing <- microbiomeData::AbsoluteAbundanceData(
+  testing <- AbsoluteAbundanceData(
               name = 'test',
               data = counts,
               recordIdColumn = c('entity.SampleID'))
