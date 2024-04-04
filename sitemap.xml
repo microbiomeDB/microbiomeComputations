@@ -13,6 +13,12 @@
     <loc>https://microbiomedb.github.io/microbiomeComputations/index.html</loc>
   </url>
   <url>
+    <loc>https://microbiomedb.github.io/microbiomeComputations/reference/AbsoluteAbundanceData-class.html</loc>
+  </url>
+  <url>
+    <loc>https://microbiomedb.github.io/microbiomeComputations/reference/AbundanceData-class.html</loc>
+  </url>
+  <url>
     <loc>https://microbiomedb.github.io/microbiomeComputations/reference/Comparator-class.html</loc>
   </url>
   <url>
@@ -28,10 +34,10 @@
     <loc>https://microbiomedb.github.io/microbiomeComputations/reference/betaDiv-methods.html</loc>
   </url>
   <url>
-    <loc>https://microbiomedb.github.io/microbiomeComputations/reference/correlation-methods.html</loc>
+    <loc>https://microbiomedb.github.io/microbiomeComputations/reference/differentialAbundance-methods.html</loc>
   </url>
   <url>
-    <loc>https://microbiomedb.github.io/microbiomeComputations/reference/differentialAbundance-methods.html</loc>
+    <loc>https://microbiomedb.github.io/microbiomeComputations/reference/getAbundances.html</loc>
   </url>
   <url>
     <loc>https://microbiomedb.github.io/microbiomeComputations/reference/index.html</loc>
@@ -41,6 +47,9 @@
   </url>
   <url>
     <loc>https://microbiomedb.github.io/microbiomeComputations/reference/rankedAbundance-methods.html</loc>
+  </url>
+  <url>
+    <loc>https://microbiomedb.github.io/microbiomeComputations/reference/removeIncompleteSamples.html</loc>
   </url>
   <url>
     <loc>https://microbiomedb.github.io/microbiomeComputations/reference/selfCorrelation-methods.html</loc>
