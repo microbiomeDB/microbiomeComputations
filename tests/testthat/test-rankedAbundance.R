@@ -6,7 +6,8 @@ test_that('rankedAbundance returns a correctly formatted data.table', {
 
   df <- testOTU
 
-  data <- microbiomeData::AbundanceData(
+  data <- AbundanceData(
+              name = 'testing',
               data = df,
               recordIdColumn = 'entity.SampleID')
 
@@ -37,15 +38,17 @@ test_that('rankedAbundance returns a correctly formatted data.table', {
   # With NAs
   nNAs <- 20
   df[sample(1:nrow(df), size=nNAs, replace = F), 2] <- NA
-  data <- microbiomeData::AbundanceData(
+  data <- AbundanceData(
+              name = 'testing',
               data = df,
               recordIdColumn = 'entity.SampleID',
               imputeZero = FALSE,
-              removeEmptySamples = FALSE)
+              removeEmptyRecords = FALSE)
 
   expect_error(rankedAbundance(data, method='q3', verbose=F))
 
-  data <- microbiomeData::AbundanceData(
+  data <- AbundanceData(
+              name = 'testing',
               data = df,
               recordIdColumn = 'entity.SampleID')
 
@@ -67,7 +70,8 @@ test_that("rankedAbundance returns a data.table with the correct attributes", {
 
   df <- testOTU
   
-  data <- microbiomeData::AbundanceData(
+  data <- AbundanceData(
+              name = 'testing',
               data = df,
               recordIdColumn = 'entity.SampleID')
   

@@ -1,13 +1,14 @@
 # a helper, to reuse and separate some logic
-#' @importFrom microbiomeData SampleMetadata removeIncompleteSamples
 cleanComparatorVariable <- function(data, comparator, verbose = c(TRUE, FALSE)) {
+  verbose <- veupathUtils::matchArg(verbose)
+  
   if (!inherits(data, 'AbundanceData')) stop("data must be of the AbundanceData class.")
   if (!inherits(comparator, 'Comparator')) stop("comparator must be of the Comparator class.")
 
   comparatorColName <- veupathUtils::getColName(comparator@variable@variableSpec)
-  data <- microbiomeData::removeIncompleteSamples(data, comparatorColName, verbose)
-  abundances <- microbiomeData::getAbundances(data, verbose = verbose)
-  sampleMetadata <- microbiomeData::getSampleMetadata(data)
+  data <- removeIncompleteSamples(data, comparatorColName, verbose)
+  abundances <- getAbundances(data, verbose = verbose)
+  sampleMetadata <- veupathUtils::getSampleMetadata(data)
   recordIdColumn <- data@recordIdColumn
 
   veupathUtils::logWithTime(paste("Received abundance table with", nrow(abundances), "samples and", (ncol(abundances)-1), "taxa."), verbose)
@@ -75,7 +76,7 @@ cleanComparatorVariable <- function(data, comparator, verbose = c(TRUE, FALSE)) 
     abundances <- abundances[get(recordIdColumn) %in% keepSamples, ]
 
     data@data <- abundances
-    data@sampleMetadata <- microbiomeData::SampleMetadata(
+    data@sampleMetadata <- veupathUtils::SampleMetadata(
       data = sampleMetadata,
       recordIdColumn = data@sampleMetadata@recordIdColumn
     )
@@ -114,10 +115,12 @@ setGeneric("deseq",
 )
 
 setMethod("deseq", signature("AbsoluteAbundanceData", "Comparator"), function(data, comparator, verbose = c(TRUE, FALSE)) {
+  verbose <- veupathUtils::matchArg(verbose)
+
   recordIdColumn <- data@recordIdColumn
   ancestorIdColumns <- data@ancestorIdColumns
   allIdColumns <- c(recordIdColumn, ancestorIdColumns)
-  sampleMetadata <- microbiomeData::getSampleMetadata(data)
+  sampleMetadata <- veupathUtils::getSampleMetadata(data)
   comparatorColName <- veupathUtils::getColName(comparator@variable@variableSpec)
 
   # First, remove id columns and any columns that are all 0s.
@@ -155,7 +158,7 @@ setMethod("deseq", signature("AbsoluteAbundanceData", "Comparator"), function(da
   })
 
   if (veupathUtils::is.error(deseq_output)) {
-    veupathUtils::logWithTime(paste0('Differential abundance FAILED with parameters recordIdColumn=', recordIdColumn, ', method = DESeq', ', verbose =', verbose), verbose)
+    veupathUtils::logWithTime(paste0('Differential abundance FAILED with parameters recordIdColumn=', recordIdColumn, ', method = DESeq2', ', verbose =', verbose), verbose)
     stop()
   }
 
@@ -164,9 +167,9 @@ setMethod("deseq", signature("AbsoluteAbundanceData", "Comparator"), function(da
 
   # Format results for easier access
   statistics <- data.frame(effectSize = deseq_results$log2FoldChange,
-                           pValue = deseq_results$pvalue,
-                           adjustedPValue = deseq_results$padj,
-                           pointID = rownames(counts))
+                            pValue = deseq_results$pvalue,
+                            adjustedPValue = deseq_results$padj,
+                            pointID = rownames(counts))
 
   result <- DifferentialAbundanceResult('effectSizeLabel' = 'log2(Fold Change)', 'statistics' = statistics)
 
@@ -174,7 +177,7 @@ setMethod("deseq", signature("AbsoluteAbundanceData", "Comparator"), function(da
 })
 
 setMethod("deseq", signature("AbundanceData", "Comparator"), function(data, comparator, verbose = c(TRUE, FALSE)) {
-  stop("Please use the microbiomeData::AbsoluteAbundanceData class with DESeq2.")
+  stop("Please use the AbsoluteAbundanceData class with DESeq2.")
 })
 
 setGeneric("maaslin",
@@ -184,10 +187,12 @@ setGeneric("maaslin",
 
 # this leaves room for us to grow into dedicated params (normalization and analysis method etc) for counts if desired
 setMethod("maaslin", signature("AbundanceData", "Comparator"), function(data, comparator, verbose = c(TRUE, FALSE)) {
+  verbose <- veupathUtils::matchArg(verbose)
+
   recordIdColumn <- data@recordIdColumn
   ancestorIdColumns <- data@ancestorIdColumns
   allIdColumns <- c(recordIdColumn, ancestorIdColumns)
-  sampleMetadata <- microbiomeData::getSampleMetadata(data)
+  sampleMetadata <- veupathUtils::getSampleMetadata(data)
   comparatorColName <- veupathUtils::getColName(comparator@variable@variableSpec)
   abundances <- data@data
 
@@ -225,7 +230,7 @@ setMethod("maaslin", signature("AbundanceData", "Comparator"), function(data, co
 #'
 #' This function returns the fold change and associated p value for a differential abundance analysis comparing samples in two groups.
 #' 
-#' @param data microbiomeData::AbsoluteAbundanceData object
+#' @param data AbsoluteAbundanceData object
 #' @param comparator Comparator object specifying the variable and values or bins to be used in dividing samples into groups.
 #' @param method string defining the the differential abundance method. Accepted values are 'DESeq2' and 'Maaslin2'.
 #' @param pValueFloor numeric value that indicates the smallest p value that should be returned. 
@@ -243,14 +248,14 @@ setMethod("maaslin", signature("AbundanceData", "Comparator"), function(data, co
 #' @export
 #' @rdname differentialAbundance-methods
 setGeneric("differentialAbundance",
-  function(data, comparator, method = c('DESeq', 'Maaslin'), pValueFloor = P_VALUE_FLOOR, verbose = c(TRUE, FALSE)) standardGeneric("differentialAbundance"),
+  function(data, comparator, method = c('DESeq2', 'Maaslin2'), pValueFloor = P_VALUE_FLOOR, verbose = c(TRUE, FALSE)) standardGeneric("differentialAbundance"),
   signature = c("data", "comparator")
 )
 
 # this is consistent regardless of rel vs abs abund. the statistical methods will differ depending on that. 
 #' @rdname differentialAbundance-methods
 #' @aliases differentialAbundance,AbundanceData,Comparator-method
-setMethod("differentialAbundance", signature("AbundanceData", "Comparator"), function(data, comparator, method = c('DESeq', 'Maaslin'), pValueFloor = P_VALUE_FLOOR, verbose = c(TRUE, FALSE)) {
+setMethod("differentialAbundance", signature("AbundanceData", "Comparator"), function(data, comparator, method = c('DESeq2', 'Maaslin2'), pValueFloor = P_VALUE_FLOOR, verbose = c(TRUE, FALSE)) {
     data <- cleanComparatorVariable(data, comparator, verbose)
     recordIdColumn <- data@recordIdColumn
     ancestorIdColumns <- data@ancestorIdColumns
@@ -263,7 +268,7 @@ setMethod("differentialAbundance", signature("AbundanceData", "Comparator"), fun
 
     
     ## Compute differential abundance
-    if (identical(method, 'DESeq')) {
+    if (identical(method, 'DESeq2')) {
       statistics <- deseq(data, comparator, verbose)
 #    } else if (identical(method, 'ANCOMBC')) {
 #
@@ -276,10 +281,10 @@ setMethod("differentialAbundance", signature("AbundanceData", "Comparator"), fun
 #                  p_adj_method = "holm", prv_cut=0,
 #                  group = comparatorColName)
 #
-    } else if (identical(method, 'Maaslin')) {
+    } else if (identical(method, 'Maaslin2')) {
       statistics <- maaslin(data, comparator, verbose)
     } else {
-      stop('Unaccepted differential abundance method. Accepted methods are "DESeq" and "Maaslin".')
+      stop('Unaccepted differential abundance method. Accepted methods are "DESeq2" and "Maaslin2".')
     }
     veupathUtils::logWithTime(paste0('Completed method=',method,'. Formatting results.'), verbose)
 
