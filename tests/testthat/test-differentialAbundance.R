@@ -20,7 +20,7 @@ test_that('differentialAbundance returns a correctly formatted data.table', {
     ))
 
 
-  testData <- microbiomeData::AbsoluteAbundanceData(
+  testData <- AbsoluteAbundanceData(
               name = 'testing',
               data = counts,
               sampleMetadata = SampleMetadata(
@@ -56,7 +56,7 @@ test_that('differentialAbundance returns a correctly formatted data.table', {
                           )
   )
 
-  result <- differentialAbundance(testData, comparator=comparatorVariable, method='DESeq', verbose=F)
+  result <- differentialAbundance(testData, comparator=comparatorVariable, method='DESeq2', verbose=F)
   expect_equal(length(result@droppedColumns), 182)
   dt <- result@data
   expect_equal(names(dt), c('SampleID'))
@@ -93,7 +93,7 @@ test_that('differentialAbundance returns a correctly formatted data.table', {
                             )
                           )
   )
-  result <- differentialAbundance(testData, comparator=comparatorVariable, method='DESeq', verbose=F)
+  result <- differentialAbundance(testData, comparator=comparatorVariable, method='DESeq2', verbose=F)
   expect_equal(length(result@droppedColumns), 407)
   dt <- result@data
   expect_equal(names(dt), c('SampleID'))
@@ -128,7 +128,7 @@ test_that('differentialAbundance returns a correctly formatted data.table', {
                           groupB = groupBBins
   )
 
-  result <- differentialAbundance(testData, comparator=comparatorVariable, method='DESeq', verbose=F)
+  result <- differentialAbundance(testData, comparator=comparatorVariable, method='DESeq2', verbose=F)
   dt <- result@data
   expect_equal(names(dt), c('SampleID'))
   expect_s3_class(dt, 'data.table')
@@ -159,7 +159,7 @@ test_that('differentialAbundance returns a correctly formatted data.table', {
                           groupB = groupBBins
   )
 
-  result <- differentialAbundance(testData, comparator=comparatorVariable, method='DESeq', verbose=F)
+  result <- differentialAbundance(testData, comparator=comparatorVariable, method='DESeq2', verbose=F)
   dt <- result@data
   expect_equal(names(dt), c('SampleID'))
   expect_s3_class(dt, 'data.table')
@@ -194,7 +194,7 @@ test_that("differentialAbundance can handle messy inputs", {
   testSampleMetadataMessy$entity.cat4[sample(1:nSamples, 50)] <- NA
 
 
-  testDataMessy <- microbiomeData::AbsoluteAbundanceData(
+  testDataMessy <- AbsoluteAbundanceData(
               name = 'testing',
               data = counts,
               sampleMetadata = SampleMetadata(
@@ -233,7 +233,7 @@ test_that("differentialAbundance can handle messy inputs", {
                           )
   )
 
-  result <- differentialAbundance(testDataMessy, comparator=comparatorVariable, method='DESeq', verbose=F)
+  result <- differentialAbundance(testDataMessy, comparator=comparatorVariable, method='DESeq2', verbose=F)
   dt <- result@data
   expect_equal(names(dt), c('SampleID'))
   expect_s3_class(dt, 'data.table')
@@ -267,7 +267,7 @@ test_that("differentialAbundance can handle messy inputs", {
                           groupB = groupBBins
   )
 
-  result <- differentialAbundance(testDataMessy, comparator=comparatorVariable, method='DESeq', verbose=F)
+  result <- differentialAbundance(testDataMessy, comparator=comparatorVariable, method='DESeq2', verbose=F)
   dt <- result@data
   expect_equal(names(dt), c('SampleID'))
   expect_s3_class(dt, 'data.table')
@@ -298,7 +298,7 @@ test_that("differentialAbundance can handle messy inputs", {
                           groupA = groupABins,
                           groupB = groupBBins
   )
-  result <- differentialAbundance(testDataMessy, comparator=comparatorVariable, method='DESeq', verbose=T)
+  result <- differentialAbundance(testDataMessy, comparator=comparatorVariable, method='DESeq2', verbose=T)
   dt <- result@data
   expect_equal(names(dt), c('SampleID'))
   expect_s3_class(dt, 'data.table')
@@ -335,7 +335,7 @@ test_that("differentialAbundance returns a ComputeResult with the correct slots"
   )
 
 
-  testData <- microbiomeData::AbsoluteAbundanceData(
+  testData <- AbsoluteAbundanceData(
               name = 'testing',
               data = counts,
               sampleMetadata = sampleMetadata,
@@ -365,8 +365,8 @@ test_that("differentialAbundance returns a ComputeResult with the correct slots"
                           )
   )
 
-  result <- differentialAbundance(testData, comparator=comparatorVariable, method='DESeq', verbose=F)
-  expect_equal(result@parameters, 'recordIdColumn = entity.SampleID, comparatorColName = entity.binA, method = DESeq, groupA =binA_a, groupB = binA_b')
+  result <- differentialAbundance(testData, comparator=comparatorVariable, method='DESeq2', verbose=F)
+  expect_equal(result@parameters, 'recordIdColumn = entity.SampleID, comparatorColName = entity.binA, method = DESeq2, groupA =binA_a, groupB = binA_b')
   expect_equal(result@recordIdColumn, 'entity.SampleID')
   expect_equal(class(result@droppedColumns), 'character')
 })
@@ -394,7 +394,7 @@ test_that("differentialAbundance fails with improper inputs", {
   )
 
 
-  testData <- microbiomeData::AbsoluteAbundanceData(
+  testData <- AbsoluteAbundanceData(
               name = 'testing',
               data = counts,
               sampleMetadata = sampleMetadata,
@@ -421,11 +421,11 @@ test_that("differentialAbundance fails with improper inputs", {
                           groupB = groupBBins
   )
 
-  expect_error(differentialAbundance(testData, comparator=comparisonVariable, method='DESeq', verbose=F))
+  expect_error(differentialAbundance(testData, comparator=comparisonVariable, method='DESeq2', verbose=F))
 
 })
 
-test_that("differentialAbundance catches deseq errors", {
+test_that("differentialAbundance catches DESeq2 errors", {
 
   testOTU_path <- testthat::test_path('testdata','testOTU.rda')
   load(testOTU_path)
@@ -468,18 +468,18 @@ test_that("differentialAbundance catches deseq errors", {
   )
 
   # Use only a few taxa
-  testData <- microbiomeData::AbsoluteAbundanceData(
+  testData <- AbsoluteAbundanceData(
               name = 'testing',
               data = counts[, c("entity.SampleID","entity.1174-901-12","entity.A2")],
               sampleMetadata = sampleMetadata,
               recordIdColumn = 'entity.SampleID')
 
-  expect_error(differentialAbundance(testData, comparator=comparisonVariable, method='DESeq', verbose=T))
+  expect_error(differentialAbundance(testData, comparator=comparisonVariable, method='DESeq2', verbose=T))
 
 
 })
 
-test_that("differentialAbundance method Maaslin does stuff",{
+test_that("differentialAbundance method Maaslin2 does stuff",{
   
   testOTU_path <- testthat::test_path('testdata','testOTU.rda')
   load(testOTU_path)
@@ -501,13 +501,13 @@ test_that("differentialAbundance method Maaslin does stuff",{
   )
 
 
-  testCountsData <- microbiomeData::AbsoluteAbundanceData(
+  testCountsData <- AbsoluteAbundanceData(
               name = 'testing',
               data = counts,
               sampleMetadata = testSampleMetadata,
               recordIdColumn = 'entity.SampleID')
 
-  testData <- microbiomeData::AbundanceData(
+  testData <- AbundanceData(
     name = 'testing',
     data = df,
     sampleMetadata = testSampleMetadata,
@@ -540,7 +540,7 @@ test_that("differentialAbundance method Maaslin does stuff",{
 
   result <- differentialAbundance(testData,
               comparator = comparatorVariable,
-              method='Maaslin',
+              method='Maaslin2',
               verbose=F)
   dt <- result@data
   stats <- result@statistics@statistics
@@ -548,7 +548,7 @@ test_that("differentialAbundance method Maaslin does stuff",{
 
   resultCounts <- differentialAbundance(testCountsData,
               comparator = comparatorVariable,
-              method='Maaslin',
+              method='Maaslin2',
               verbose=F)
   dtCounts <- result@data
   statsCounts <- result@statistics@statistics
@@ -575,7 +575,7 @@ test_that("toJSON for DifferentialAbundanceResult works",{
     "entity.binA" = rep(c("binA_a", "binA_b"), nSamples/2, replace=T)
     ))
 
-  testData <- microbiomeData::AbundanceData(
+  testData <- AbundanceData(
     name = 'testing',
     data = df,
     sampleMetadata = SampleMetadata(
@@ -611,7 +611,7 @@ test_that("toJSON for DifferentialAbundanceResult works",{
 
   result <- differentialAbundance(testData,
               comparator = comparatorVariable,
-              method='Maaslin',
+              method='Maaslin2',
               verbose=F)
   stats <- result@statistics
   jsonList <- jsonlite::fromJSON(toJSON(result@statistics))
@@ -642,7 +642,7 @@ test_that("The smallest pvalue we can get is our p value floor", {
     "entity.binA" = rep(c("binA_a", "binA_b"), nSamples/2, replace=T)
     ))
 
-  testData <- microbiomeData::AbsoluteAbundanceData(
+  testData <- AbsoluteAbundanceData(
     name = 'testing',
     data = counts,
     sampleMetadata = SampleMetadata(
@@ -678,22 +678,22 @@ test_that("The smallest pvalue we can get is our p value floor", {
   )
 
   # Try with different p value floors
-  result <- differentialAbundance(testData, comparator=comparatorVariable, method='DESeq', pValueFloor = 0, verbose=F)
+  result <- differentialAbundance(testData, comparator=comparatorVariable, method='DESeq2', pValueFloor = 0, verbose=F)
   expect_equal(min(result@statistics@statistics$pValue), 0)
   expect_equal(min(result@statistics@statistics$adjustedPValue, na.rm=T), 0) # Confirmed NAs are for pvalue=1
 
-  result <- differentialAbundance(testData, comparator=comparatorVariable, method='DESeq', pValueFloor = P_VALUE_FLOOR, verbose=F)
+  result <- differentialAbundance(testData, comparator=comparatorVariable, method='DESeq2', pValueFloor = P_VALUE_FLOOR, verbose=F)
   expect_equal(min(result@statistics@statistics$pValue), P_VALUE_FLOOR)
   expect_equal(min(result@statistics@statistics$adjustedPValue, na.rm=T), result@statistics@adjustedPValueFloor) # Confirmed NAs are for pvalue=1
 
 
 
-  # Repeat with Maaslin
-  result <- differentialAbundance(testData, comparator=comparatorVariable, method='Maaslin', pValueFloor = 0, verbose=F)
+  # Repeat with Maaslin2
+  result <- differentialAbundance(testData, comparator=comparatorVariable, method='Maaslin2', pValueFloor = 0, verbose=F)
   expect_equal(min(result@statistics@statistics$pValue), 0)
   expect_equal(min(result@statistics@statistics$adjustedPValue), 0)
 
-  result <- differentialAbundance(testData, comparator=comparatorVariable, method='Maaslin', pValueFloor = P_VALUE_FLOOR, verbose=F)
+  result <- differentialAbundance(testData, comparator=comparatorVariable, method='Maaslin2', pValueFloor = P_VALUE_FLOOR, verbose=F)
   expect_equal(min(result@statistics@statistics$pValue), P_VALUE_FLOOR)
   expect_equal(min(result@statistics@statistics$adjustedPValue), result@statistics@adjustedPValueFloor)
 
@@ -715,7 +715,7 @@ test_that("differentialAbundance fails if comparator has one value", {
     recordIdColumn ="entity.SampleID"
   )
 
-  testData <- microbiomeData::AbundanceData(
+  testData <- AbundanceData(
     name = 'testing',
     data = df,
     sampleMetadata = sampleMetadata,
@@ -734,6 +734,6 @@ test_that("differentialAbundance fails if comparator has one value", {
     groupB = veupathUtils::BinList(S4Vectors::SimpleList(c(veupathUtils::Bin(binLabel="binB"))))
   )
 
-  expect_error(differentialAbundance(testData, comparator=comparatorVariable, method='DESeq', verbose=F))
-  expect_error(differentialAbundance(testData, comparator=comparatorVariable, method='Maaslin', verbose=F))
+  expect_error(differentialAbundance(testData, comparator=comparatorVariable, method='DESeq2', verbose=F))
+  expect_error(differentialAbundance(testData, comparator=comparatorVariable, method='Maaslin2', verbose=F))
 })

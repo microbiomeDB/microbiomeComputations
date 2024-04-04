@@ -8,7 +8,7 @@
 differentialAbundance(
   data,
   comparator,
-  method = c("DESeq", "Maaslin"),
+  method = c("DESeq2", "Maaslin2"),
   pValueFloor = P_VALUE_FLOOR,
   verbose = c(TRUE, FALSE)
 )
@@ -16,13 +16,13 @@ differentialAbundance(
 \S4method{differentialAbundance}{AbundanceData,Comparator}(
   data,
   comparator,
-  method = c("DESeq", "Maaslin"),
+  method = c("DESeq2", "Maaslin2"),
   pValueFloor = P_VALUE_FLOOR,
   verbose = c(TRUE, FALSE)
 )
 }
 \arguments{
-\item{data}{microbiomeData::AbsoluteAbundanceData object}
+\item{data}{AbsoluteAbundanceData object}
 
 \item{comparator}{Comparator object specifying the variable and values or bins to be used in dividing samples into groups.}
 
