@@ -22,7 +22,7 @@ setMethod("getAbundances", signature("AbundanceData"), function(object, ignoreIm
   includeIds <- veupathUtils::matchArg(includeIds)
   verbose <- veupathUtils::matchArg(verbose)
 
-  dt <- veupathUtils::getCollectionData(object, ignoreImputeZero = ignoreImputeZero, includeIds = includeIds, verbose = verbose)
+  dt <- veupathUtils::getCollectionData(object, variableNames = NULL, ignoreImputeZero = ignoreImputeZero, includeIds = includeIds, verbose = verbose)
 
   return(dt)
 })
