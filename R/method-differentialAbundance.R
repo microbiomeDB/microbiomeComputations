@@ -246,16 +246,16 @@ setMethod("maaslin", signature("AbundanceData", "Comparator"), function(data, co
 #' @importFrom purrr discard
 #' @useDynLib microbiomeComputations
 #' @export
-#' @rdname differentialAbundance-methods
-setGeneric("differentialAbundance",
-  function(data, comparator, method = c('DESeq2', 'Maaslin2'), pValueFloor = P_VALUE_FLOOR, verbose = c(TRUE, FALSE)) standardGeneric("differentialAbundance"),
+#' @rdname internalDiffAbund-methods
+setGeneric("internalDiffAbund",
+  function(data, comparator, method = c('DESeq2', 'Maaslin2'), pValueFloor = P_VALUE_FLOOR, verbose = c(TRUE, FALSE)) standardGeneric("internalDiffAbund"),
   signature = c("data", "comparator")
 )
 
 # this is consistent regardless of rel vs abs abund. the statistical methods will differ depending on that. 
-#' @rdname differentialAbundance-methods
-#' @aliases differentialAbundance,AbundanceData,Comparator-method
-setMethod("differentialAbundance", signature("AbundanceData", "Comparator"), function(data, comparator, method = c('DESeq2', 'Maaslin2'), pValueFloor = P_VALUE_FLOOR, verbose = c(TRUE, FALSE)) {
+#' @rdname internalDiffAbund-methods
+#' @aliases internalDiffAbund,AbundanceData,Comparator-method
+setMethod("internalDiffAbund", signature("AbundanceData", "Comparator"), function(data, comparator, method = c('DESeq2', 'Maaslin2'), pValueFloor = P_VALUE_FLOOR, verbose = c(TRUE, FALSE)) {
     data <- cleanComparatorVariable(data, comparator, verbose)
     recordIdColumn <- data@recordIdColumn
     ancestorIdColumns <- data@ancestorIdColumns
