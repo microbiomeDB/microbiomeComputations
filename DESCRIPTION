@@ -1,6 +1,6 @@
 Package: microbiomeComputations
 Title: Compute Results for Microbiome Analyses
-Version: 5.1.1
+Version: 5.1.2
 Authors@R: 
     c(person(given = "Danielle",
            family = "Callan",
