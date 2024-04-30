@@ -34,13 +34,13 @@
     <loc>https://microbiomedb.github.io/microbiomeComputations/reference/betaDiv-methods.html</loc>
   </url>
   <url>
-    <loc>https://microbiomedb.github.io/microbiomeComputations/reference/differentialAbundance-methods.html</loc>
-  </url>
-  <url>
     <loc>https://microbiomedb.github.io/microbiomeComputations/reference/getAbundances.html</loc>
   </url>
   <url>
     <loc>https://microbiomedb.github.io/microbiomeComputations/reference/index.html</loc>
+  </url>
+  <url>
+    <loc>https://microbiomedb.github.io/microbiomeComputations/reference/internalDiffAbund-methods.html</loc>
   </url>
   <url>
     <loc>https://microbiomedb.github.io/microbiomeComputations/reference/microbiomeComputations-package.html</loc>
