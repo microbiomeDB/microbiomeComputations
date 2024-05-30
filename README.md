@@ -1,12 +1,16 @@
 
 <!-- badges: start -->
   [![R-CMD-check](https://github.com/microbiomeDB/microbiomeComputations/workflows/R-CMD-check/badge.svg)](https://github.com/microbiomeDB/microbiomeComputations/actions)
+  [![](https://dcbadge.limes.pink/api/server/DEjNbxgq?style=flat)](https://discord.gg/DEjNbxgq)
   <!-- badges: end -->
 
 # microbiomeComputations
 
-microbiomeComputations is an R package which provides helper functions for performing common analyses 
+microbiomeComputations is an R package which provides helper functions for performing common analyses
 on microbiome data. The results are available as json, or optionally in a `data.table`. This package is intended to be compliant with the API specified in VEuPathDB/service-eda-compute.
+
+If you have questions or comments of any kind, join us on our [Discord Community Server](https://discord.gg/DEjNbxgq)! We'd love to hear from you.
+
 
 ## Installation
 
