@@ -9,6 +9,15 @@ test_that('AbundanceData validation works', {
               name = 'test',
               data = df,
               recordIdColumn = c('entity.SampleID')))
+
+  # Handle negatives more gracefully
+  df_neg <- df
+  df_neg[3, 5] <- -1
+  df_neg[7, 9] <- -2
+  expect_error(microbiomeComputations::AbundanceData(
+              data = df_neg,
+              recordIdColumn = c('entity.SampleID')))
+
 })
 
 test_that("getAbundances works", {
