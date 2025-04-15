@@ -4,11 +4,6 @@ test_that('AbundanceData validation works', {
   load(testOTU_path)
 
   df <- testOTU
-  df[,1][10] <- -10
-  expect_error(AbundanceData(
-              name = 'test',
-              data = df,
-              recordIdColumn = c('entity.SampleID')))
 
   # Handle negatives more gracefully
   df_neg <- df
@@ -17,6 +12,19 @@ test_that('AbundanceData validation works', {
   expect_error(microbiomeComputations::AbundanceData(
               data = df_neg,
               recordIdColumn = c('entity.SampleID')))
+
+  # Ensure funky ids do not throw off our negative value check (see issue #30)
+  df[2, 1] <- "__id__"
+  
+  abundance_collection <- AbundanceData(
+    name = 'test',
+    data = df,
+    recordIdColumn = 'entity.SampleID'
+  )
+  
+  abundances <- getAbundances(abundance_collection)
+  expect_equal(nrow(abundances), nrow(df))
+  expect_equal(ncol(abundances), ncol(df))
 
 })
 
