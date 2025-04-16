@@ -3,18 +3,21 @@ check_abundance_data <- function(object) {
     df <- object@data
     record_id_col <- object@recordIdColumn
     ancestor_id_cols <- object@ancestorIdColumns
+    allIdColumns <- c(record_id_col, ancestor_id_cols)
 
-    if (any(df < 0, na.rm=TRUE)) {
+    if (any(df[, -..allIdColumns] < 0, na.rm=TRUE)) {
       # Find negative values in df and return them for easier debugging.
       negative_indices <- which(df < 0, arr.ind = TRUE)
-      print(negative_indices)
+      row_indices <- unique(negative_indices[, 1])
+      col_indices <- unique(negative_indices[, 2])
+      negative_values <- unlist(lapply(seq_along(negative_indices[, 1]), function(i) dt[negative_indices[i, 1], negative_indices[i, 2], with=FALSE]))
 
       msg <- paste("Abundance data cannot contain negative values. Found negative values in the following samples: ", 
-        paste(df[[record_id_col]][negative_indices[, 2]], collapse = ", "),
+        paste(df[[record_id_col]][row_indices], collapse = ", "),
         " and in the following columns: ",
-        paste(colnames(df)[negative_indices[, 1]], collapse = ", "),
+        paste(colnames(df)[col_indices], collapse = ", "),
         ". The values are: ",
-        paste(df[negative_indices], collapse = ", ")
+        paste(negative_values, collapse = ", ")
       )
       errors <- c(errors, msg)
     }
