@@ -23,11 +23,11 @@ Imports:
     SpiecEasi,
     stringi,
     vegan,
-    veupathUtils,
+    veupathUtils (>= 2.7.0)
 Depends:
     R (>= 2.10)
 Remotes:
-    microbiomeDB/veupathUtils
+    VEuPathDB/veupathUtils
 LinkingTo: Rcpp
 URL: https://github.com/microbiomeDB/microbiomeComputations, https://microbiomedb.github.io/microbiomeComputations/
 BugReports: https://github.com/microbiomeDB/microbiomeComputations/issues
