@@ -20,12 +20,41 @@ Use the R package [remotes](https://cran.r-project.org/web/packages/remotes/inde
 remotes::install_github('microbiomeDB/microbiomeComputations')
 ```
 
-### Note on Maaslin2 Installation
+### Troubleshooting Installation Issues
 
-If you encounter difficulties installing Maaslin2, try installing from GitHub directly:
+#### Maaslin2 Installation
+
+If you encounter difficulties installing `Maaslin2`, try installing from GitHub directly:
 
 ```R
 remotes::install_github("biobakery/Maaslin2")
+```
+
+#### SpiecEasi and gfortran on macOS
+
+If you encounter errors related to `gfortran` when installing `SpiecEasi`, particularly errors like:
+
+```
+ld: library 'emutls_w' not found
+ld: warning: search path '/opt/gfortran/lib' not found
+```
+
+This typically occurs when gfortran is installed via Homebrew but R expects it in a different location. The recommended solution is to install the official gfortran from the R project:
+
+1. Download and install gfortran from: https://github.com/R-macos/gcc-14-branch/releases
+2. Restart R and try installing again
+
+Alternatively, if you have gfortran installed via Homebrew (`/opt/homebrew/bin/gfortran`), you may need to create symlinks or set appropriate environment variables.
+
+### Important: Dependency Change (v5.1.7+)
+
+Starting with version 5.1.7, this package depends on `mbioUtils` instead of `veupathUtils`. If you're updating from an older version and encounter issues, you may need to:
+
+```R
+# Remove old installation
+remove.packages(c("microbiomeComputations", "veupathUtils"))
+# Reinstall fresh
+remotes::install_github('microbiomeDB/microbiomeComputations')
 ```
 
 ## Usage
