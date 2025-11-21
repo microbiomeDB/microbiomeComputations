@@ -26,10 +26,10 @@
 # }
 
 #' @import data.table
-#' @import veupathUtils
+#' @import mbioUtils
 rankTaxa <- function(df, method=c('median','max','q3','variance')) {
 
-    method <- veupathUtils::matchArg(method)
+    method <- mbioUtils::matchArg(method)
     #### Notes: Assume df has rows as samples and at least columns Abundance and TaxonomicLevel
 
     if (identical(method, 'median')) {

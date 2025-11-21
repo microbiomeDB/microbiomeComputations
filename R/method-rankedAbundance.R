@@ -7,7 +7,7 @@
 #' @param cutoff integer indicating the maximium number of taxa to be kept after ranking.
 #' @param verbose boolean indicating if timed logging is desired
 #' @return ComputeResult object
-#' @import veupathUtils
+#' @import mbioUtils
 #' @import data.table
 #' @importFrom S4Vectors SimpleList
 #' @export
@@ -27,8 +27,8 @@ setMethod("rankedAbundance", signature("AbundanceData"), function(data, method =
     allIdColumns <- c(recordIdColumn, ancestorIdColumns)
 
     # Initialize and check inputs
-    method <- veupathUtils::matchArg(method)
-    verbose <- veupathUtils::matchArg(verbose)
+    method <- mbioUtils::matchArg(method)
+    verbose <- mbioUtils::matchArg(verbose)
 
     # Check that incoming df meets requirements
     if (!'data.table' %in% class(df)) {
@@ -36,7 +36,7 @@ setMethod("rankedAbundance", signature("AbundanceData"), function(data, method =
     }
 
     computeMessage <- ''
-    veupathUtils::logWithTime(paste("Received df table with", nrow(df), "samples and", (ncol(df)-1), "taxa."), verbose)
+    mbioUtils::logWithTime(paste("Received df table with", nrow(df), "samples and", (ncol(df)-1), "taxa."), verbose)
 
     # Reshape back to sample, taxonomicLevel, abundance
     formattedDT <- data.table::melt(df, measure.vars=colnames(df[, -..allIdColumns]), variable.factor=F, variable.name='TaxonomicLevel', value.name="Abundance")
@@ -55,42 +55,42 @@ setMethod("rankedAbundance", signature("AbundanceData"), function(data, method =
     keepCols <- c(allIdColumns, topN)
     dt = df[, ..keepCols]
 
-    veupathUtils::logWithTime("Finished ranking taxa", verbose)
+    mbioUtils::logWithTime("Finished ranking taxa", verbose)
     
     result <- new("ComputeResult")
     result@name <- 'rankedAbundance'
     result@recordIdColumn <- recordIdColumn
     result@ancestorIdColumns <- ancestorIdColumns
 
-    entity <- veupathUtils::strSplit(recordIdColumn,".", 4, 1)
+    entity <- mbioUtils::strSplit(recordIdColumn,".", 4, 1)
     result@computationDetails <- computeMessage
     result@parameters <- paste0('method = ',method, ', isCutoff = ', isCutoff)
 
-    collectionMemberVariableIds <- unlist(lapply(names(dt[, -..allIdColumns]), veupathUtils::strSplit, ".", 4, 2))
+    collectionMemberVariableIds <- unlist(lapply(names(dt[, -..allIdColumns]), mbioUtils::strSplit, ".", 4, 2))
 
     makeVariableSpecs <- function(variableId) {
-	    veupathUtils::VariableSpec(variableId = variableId, entityId = entity)
+	    mbioUtils::VariableSpec(variableId = variableId, entityId = entity)
     }
 
-    computedVariableMetadata <- veupathUtils::VariableMetadata(
-                 variableClass = veupathUtils::VariableClass(value = "computed"),
-                 variableSpec = veupathUtils::VariableSpec(variableId = "rankedAbundance", entityId = entity),
-                 plotReference = veupathUtils::PlotReference(value = "xAxis"),
+    computedVariableMetadata <- mbioUtils::VariableMetadata(
+                 variableClass = mbioUtils::VariableClass(value = "computed"),
+                 variableSpec = mbioUtils::VariableSpec(variableId = "rankedAbundance", entityId = entity),
+                 plotReference = mbioUtils::PlotReference(value = "xAxis"),
                  displayName = "To be determined by client",
                  displayRangeMin = 0,
                  displayRangeMax = 1,
-                 dataType = veupathUtils::DataType(value = "NUMBER"),
-                 dataShape = veupathUtils::DataShape(value = "CONTINUOUS"),
+                 dataType = mbioUtils::DataType(value = "NUMBER"),
+                 dataShape = mbioUtils::DataShape(value = "CONTINUOUS"),
                  isCollection = TRUE,
-                 members = veupathUtils::VariableSpecList(S4Vectors::SimpleList(lapply(collectionMemberVariableIds, makeVariableSpecs)))
+                 members = mbioUtils::VariableSpecList(S4Vectors::SimpleList(lapply(collectionMemberVariableIds, makeVariableSpecs)))
       )
     
-    result@computedVariableMetadata <- veupathUtils::VariableMetadataList(S4Vectors::SimpleList(computedVariableMetadata))
-    names(dt) <- veupathUtils::stripEntityIdFromColumnHeader(names(dt))
+    result@computedVariableMetadata <- mbioUtils::VariableMetadataList(S4Vectors::SimpleList(computedVariableMetadata))
+    names(dt) <- mbioUtils::stripEntityIdFromColumnHeader(names(dt))
     result@data <- dt
 
     validObject(result)
-    veupathUtils::logWithTime(paste('Ranked abundance computation completed with parameters recordIdColumn=', recordIdColumn, ', method =', method, ', cutoff =', cutoff, ', naToZero = ', naToZero, ', verbose =', verbose), verbose)
+    mbioUtils::logWithTime(paste('Ranked abundance computation completed with parameters recordIdColumn=', recordIdColumn, ', method =', method, ', cutoff =', cutoff, ', naToZero = ', naToZero, ', verbose =', verbose), verbose)
 
     return(result)
   })

@@ -1,12 +1,12 @@
-correlationGeneric <- getGeneric("correlation", package = "veupathUtils")
-selfCorrelationGeneric <- getGeneric("selfCorrelation", package = "veupathUtils")
+correlationGeneric <- getGeneric("correlation", package = "mbioUtils")
+selfCorrelationGeneric <- getGeneric("selfCorrelation", package = "mbioUtils")
 
 setClassUnion("missingOrNULL", c("missing", "NULL"))
 
 #' Self Correlation
 #'
 #' This function returns correlation coefficients for variables in one AbundanceData object against itself. It generally serves as a 
-#' convenience wrapper around veupathUtils::correlation, with the exception that it additionally supports sparcc.
+#' convenience wrapper around mbioUtils::correlation, with the exception that it additionally supports sparcc.
 #' 
 #' @param data An AbundanceData object
 #' @param method string defining the type of correlation to run. The currently supported values are 'spearman','pearson' and 'sparcc'
@@ -16,31 +16,31 @@ setClassUnion("missingOrNULL", c("missing", "NULL"))
 #' @param varianceThreshold numeric threshold to filter features by variance across samples
 #' @param stdDevThreshold numeric threshold to filter features by standard deviation across samples
 #' @return ComputeResult object
-#' @import veupathUtils
+#' @import mbioUtils
 #' @export
 #' @rdname selfCorrelation-methods
 #' @aliases selfCorrelation,AbundanceData-method
 setMethod(selfCorrelationGeneric, signature("AbundanceData"), 
 function(data, method = c('spearman','pearson','sparcc'), format = c('ComputeResult', 'data.table'), verbose = c(TRUE, FALSE), proportionNonZeroThreshold = 0.5, varianceThreshold = 0, stdDevThreshold = 0) {
   
-  format <- veupathUtils::matchArg(format)
-  method <- veupathUtils::matchArg(method)
-  verbose <- veupathUtils::matchArg(verbose)
+  format <- mbioUtils::matchArg(format)
+  method <- mbioUtils::matchArg(method)
+  verbose <- mbioUtils::matchArg(verbose)
 
   #prefilters applied
-  data <- veupathUtils::pruneFeatures(data, predicateFactory('proportionNonZero', proportionNonZeroThreshold), verbose)
-  data <- veupathUtils::pruneFeatures(data, predicateFactory('variance', varianceThreshold), verbose)
-  data <- veupathUtils::pruneFeatures(data, predicateFactory('sd', stdDevThreshold), verbose)
+  data <- mbioUtils::pruneFeatures(data, predicateFactory('proportionNonZero', proportionNonZeroThreshold), verbose)
+  data <- mbioUtils::pruneFeatures(data, predicateFactory('variance', varianceThreshold), verbose)
+  data <- mbioUtils::pruneFeatures(data, predicateFactory('sd', stdDevThreshold), verbose)
 
   abundances <- getAbundances(data, FALSE, FALSE, verbose)
-  corrResult <- veupathUtils::correlation(abundances, NULL, method = method, format = 'data.table', verbose = verbose)
+  corrResult <- mbioUtils::correlation(abundances, NULL, method = method, format = 'data.table', verbose = verbose)
 
-  veupathUtils::logWithTime(paste("Received df table with", nrow(abundances), "samples and", (ncol(abundances)-1), "features with abundances."), verbose)
+  mbioUtils::logWithTime(paste("Received df table with", nrow(abundances), "samples and", (ncol(abundances)-1), "features with abundances."), verbose)
 
   if (format == 'data.table') {
     return(corrResult)
   } else {
-    result <- veupathUtils::buildCorrelationComputeResult(corrResult, data, NULL, method, verbose)
+    result <- mbioUtils::buildCorrelationComputeResult(corrResult, data, NULL, method, verbose)
     result@computationDetails <- 'selfCorrelation'
     return(result)
   }  

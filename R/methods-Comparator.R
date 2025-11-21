@@ -15,7 +15,7 @@ setGeneric("getGroupLabels",
 #' @rdname Comparator-methods
 #' @aliases getGroupLabels,Comparator-method 
 setMethod("getGroupLabels", signature("Comparator"), function(object, group = c("groupA", "groupB")) {
-  group <- veupathUtils::matchArg(group)
+  group <- mbioUtils::matchArg(group)
 
   groupBinList <- slot(object, group)
 

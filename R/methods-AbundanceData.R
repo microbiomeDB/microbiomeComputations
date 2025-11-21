@@ -18,11 +18,11 @@ setGeneric("getAbundances",
 #' @rdname getAbundances
 #' @aliases getAbundances,AbundanceData-method
 setMethod("getAbundances", signature("AbundanceData"), function(object, ignoreImputeZero = c(FALSE, TRUE), includeIds = c(TRUE, FALSE), verbose = c(TRUE, FALSE)) {
-  ignoreImputeZero <- veupathUtils::matchArg(ignoreImputeZero)
-  includeIds <- veupathUtils::matchArg(includeIds)
-  verbose <- veupathUtils::matchArg(verbose)
+  ignoreImputeZero <- mbioUtils::matchArg(ignoreImputeZero)
+  includeIds <- mbioUtils::matchArg(includeIds)
+  verbose <- mbioUtils::matchArg(verbose)
 
-  dt <- veupathUtils::getCollectionData(object, variableNames = NULL, ignoreImputeZero = ignoreImputeZero, includeIds = includeIds, verbose = verbose)
+  dt <- mbioUtils::getCollectionData(object, variableNames = NULL, ignoreImputeZero = ignoreImputeZero, includeIds = includeIds, verbose = verbose)
 
   return(dt)
 })
@@ -47,9 +47,9 @@ setGeneric("removeIncompleteSamples",
 #' @rdname removeIncompleteSamples
 #' @aliases removeIncompleteSamples,AbundanceData-method
 setMethod("removeIncompleteSamples", signature("AbundanceData"), function(object, colName = character(), verbose = c(TRUE, FALSE)) {
-  verbose <- veupathUtils::matchArg(verbose)
+  verbose <- mbioUtils::matchArg(verbose)
 
-  object <- veupathUtils::removeIncompleteRecords(object, colName = colName, verbose = verbose)
+  object <- mbioUtils::removeIncompleteRecords(object, colName = colName, verbose = verbose)
 
   return(object)
 })

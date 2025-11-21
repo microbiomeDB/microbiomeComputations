@@ -1,4 +1,4 @@
-toJSONGeneric <- getGeneric("toJSON", package = "veupathUtils")
+toJSONGeneric <- getGeneric("toJSON", package = "mbioUtils")
 
 setMethod(toJSONGeneric, signature("DifferentialAbundanceResult"), function(object, ...) {
   tmp <- character()
