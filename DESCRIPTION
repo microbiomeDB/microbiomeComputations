@@ -27,9 +27,7 @@ Imports:
 Depends:
     R (>= 2.10)
 Remotes:
-    microbiomeDB/mbioUtils,
-    zdk123/SpiecEasi@v1.0.7,
-    bioc::Maaslin2
+    microbiomeDB/mbioUtils
 LinkingTo: Rcpp
 URL: https://github.com/microbiomeDB/microbiomeComputations, https://microbiomedb.github.io/microbiomeComputations/
 BugReports: https://github.com/microbiomeDB/microbiomeComputations/issues
