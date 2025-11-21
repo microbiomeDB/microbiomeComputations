@@ -22,14 +22,7 @@ remotes::install_github('microbiomeDB/microbiomeComputations')
 
 ### Note on Maaslin2 Installation
 
-The `Maaslin2` package from Bioconductor may not have pre-compiled binaries available for all platforms (particularly ARM64 macOS). If you encounter installation issues, you can install it from source:
-
-```R
-if (!requireNamespace("BiocManager", quietly = TRUE)) install.packages("BiocManager")
-BiocManager::install("Maaslin2", type = "source")
-```
-
-Alternatively, you can install the development version directly from GitHub:
+If you encounter difficulties installing Maaslin2, try installing from GitHub directly:
 
 ```R
 remotes::install_github("biobakery/Maaslin2")
