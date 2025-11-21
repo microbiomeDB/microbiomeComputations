@@ -8,7 +8,7 @@
 #' @return ComputeResult object
 #' @importFrom vegan diversity
 #' @importFrom stringi stri_trans_totitle
-#' @import veupathUtils
+#' @import mbioUtils
 #' @import data.table
 #' @importFrom methods new slot validObject
 #' @importFrom stats as.dist as.formula median quantile var
@@ -29,8 +29,8 @@ setMethod("alphaDiv", signature("AbundanceData"), function(data, method = c('sha
     naToZero <- data@imputeZero
 
     # Initialize and check inputs
-    method <- veupathUtils::matchArg(method)
-    verbose <- veupathUtils::matchArg(verbose)
+    method <- mbioUtils::matchArg(method)
+    verbose <- mbioUtils::matchArg(verbose)
 
     # Check that incoming df meets requirements
     if (!'data.table' %in% class(df)) {
@@ -38,7 +38,7 @@ setMethod("alphaDiv", signature("AbundanceData"), function(data, method = c('sha
     }
     
     computeMessage <- ''
-    veupathUtils::logWithTime(paste("Received df table with", nrow(df), "samples and", (ncol(df)-1), "taxa."), verbose)
+    mbioUtils::logWithTime(paste("Received df table with", nrow(df), "samples and", (ncol(df)-1), "taxa."), verbose)
     
     # Compute alpha diversity
     if (identical(method, 'shannon') | identical(method, 'simpson')){
@@ -58,41 +58,41 @@ setMethod("alphaDiv", signature("AbundanceData"), function(data, method = c('sha
     result@ancestorIdColumns <- ancestorIdColumns
 
     # Handle errors or return positive computeMessage
-    if (veupathUtils::is.error(alphaDivDT)) {
-      veupathUtils::logWithTime(paste('Alpha diversity computation FAILED with parameters, method =', method), verbose)
+    if (mbioUtils::is.error(alphaDivDT)) {
+      mbioUtils::logWithTime(paste('Alpha diversity computation FAILED with parameters, method =', method), verbose)
       stop() 
     } else {
       computeMessage <- paste('Computed', method, 'alpha diversity.')
-      veupathUtils::logWithTime(paste(method, 'alpha diversity computation complete.'), verbose)
+      mbioUtils::logWithTime(paste(method, 'alpha diversity computation complete.'), verbose)
     }
 
     # Assemble data table
     dt <- data.table::as.data.table(df[, ..allIdColumns])
     dt$alphaDiversity <- alphaDivDT
 
-    entity <- veupathUtils::strSplit(recordIdColumn, ".", 4, 1)
+    entity <- mbioUtils::strSplit(recordIdColumn, ".", 4, 1)
     result@computationDetails <- computeMessage
     result@parameters <- paste('method =', method)
     result@recordIdColumn <- recordIdColumn
     result@ancestorIdColumns <- ancestorIdColumns
 
-    computedVariableMetadata <- veupathUtils::VariableMetadata(
-                 variableClass = veupathUtils::VariableClass(value = "computed"),
-                 variableSpec = veupathUtils::VariableSpec(variableId = names(dt[, -..allIdColumns]), entityId = entity),
-                 plotReference = veupathUtils::PlotReference(value = "yAxis"),
+    computedVariableMetadata <- mbioUtils::VariableMetadata(
+                 variableClass = mbioUtils::VariableClass(value = "computed"),
+                 variableSpec = mbioUtils::VariableSpec(variableId = names(dt[, -..allIdColumns]), entityId = entity),
+                 plotReference = mbioUtils::PlotReference(value = "yAxis"),
                  displayName = computedVarLabel,
                  displayRangeMin = 0,
                  displayRangeMax = max(max(dt$alphaDiversity, na.rm = TRUE),1),
-                 dataType = veupathUtils::DataType(value = "NUMBER"),
-                 dataShape = veupathUtils::DataShape(value = "CONTINUOUS")
+                 dataType = mbioUtils::DataType(value = "NUMBER"),
+                 dataShape = mbioUtils::DataShape(value = "CONTINUOUS")
       )
       
-    result@computedVariableMetadata <- veupathUtils::VariableMetadataList(S4Vectors::SimpleList(computedVariableMetadata))
-    names(dt) <- veupathUtils::stripEntityIdFromColumnHeader(names(dt))
+    result@computedVariableMetadata <- mbioUtils::VariableMetadataList(S4Vectors::SimpleList(computedVariableMetadata))
+    names(dt) <- mbioUtils::stripEntityIdFromColumnHeader(names(dt))
     result@data <- dt 
     
     validObject(result)
-    veupathUtils::logWithTime(paste('Alpha diversity computation completed with parameters method=', method), verbose)
+    mbioUtils::logWithTime(paste('Alpha diversity computation completed with parameters method=', method), verbose)
     
     return(result)
 })

@@ -1,17 +1,17 @@
 # a helper, to reuse and separate some logic
 cleanComparatorVariable <- function(data, comparator, verbose = c(TRUE, FALSE)) {
-  verbose <- veupathUtils::matchArg(verbose)
+  verbose <- mbioUtils::matchArg(verbose)
   
   if (!inherits(data, 'AbundanceData')) stop("data must be of the AbundanceData class.")
   if (!inherits(comparator, 'Comparator')) stop("comparator must be of the Comparator class.")
 
-  comparatorColName <- veupathUtils::getColName(comparator@variable@variableSpec)
+  comparatorColName <- mbioUtils::getColName(comparator@variable@variableSpec)
   data <- removeIncompleteSamples(data, comparatorColName, verbose)
   abundances <- getAbundances(data, verbose = verbose)
-  sampleMetadata <- veupathUtils::getSampleMetadata(data)
+  sampleMetadata <- mbioUtils::getSampleMetadata(data)
   recordIdColumn <- data@recordIdColumn
 
-  veupathUtils::logWithTime(paste("Received abundance table with", nrow(abundances), "samples and", (ncol(abundances)-1), "taxa."), verbose)
+  mbioUtils::logWithTime(paste("Received abundance table with", nrow(abundances), "samples and", (ncol(abundances)-1), "taxa."), verbose)
 
   # Subset to only include samples with metadata defined in groupA and groupB
     if (identical(comparator@variable@dataShape@value, "CONTINUOUS")) {
@@ -26,8 +26,8 @@ cleanComparatorVariable <- function(data, comparator, verbose = c(TRUE, FALSE)) 
 
       # Collect all instances where the comparatorColName has values in the bins from each group.
       # So inGroupA is a vector with 0 if the value in comparatorColName is not within any of the group A bins and >0 otherwise.
-      inGroupA <- veupathUtils::whichValuesInBinList(sampleMetadata[[comparatorColName]], comparator@groupA)
-      inGroupB <- veupathUtils::whichValuesInBinList(sampleMetadata[[comparatorColName]], comparator@groupB)
+      inGroupA <- mbioUtils::whichValuesInBinList(sampleMetadata[[comparatorColName]], comparator@groupA)
+      inGroupB <- mbioUtils::whichValuesInBinList(sampleMetadata[[comparatorColName]], comparator@groupB)
 
       # Eventually move this check to Comparator validation. See #47
       if ((any(inGroupA * inGroupB) > 0)) {
@@ -70,13 +70,13 @@ cleanComparatorVariable <- function(data, comparator, verbose = c(TRUE, FALSE)) 
     if (length(unique(sampleMetadata[[comparatorColName]])) < 2) {
       stop("The comparator variable must have at least two values/ groups within the subset.")
     }
-    veupathUtils::logWithTime(paste0("Found ",length(keepSamples)," samples with a value for ", comparatorColName, " in either groupA or groupB. The calculation will continue with only these samples."), verbose)
+    mbioUtils::logWithTime(paste0("Found ",length(keepSamples)," samples with a value for ", comparatorColName, " in either groupA or groupB. The calculation will continue with only these samples."), verbose)
 
     # Subset the abundance data based on the kept samples
     abundances <- abundances[get(recordIdColumn) %in% keepSamples, ]
 
     data@data <- abundances
-    data@sampleMetadata <- veupathUtils::SampleMetadata(
+    data@sampleMetadata <- mbioUtils::SampleMetadata(
       data = sampleMetadata,
       recordIdColumn = data@sampleMetadata@recordIdColumn
     )
@@ -115,13 +115,13 @@ setGeneric("deseq",
 )
 
 setMethod("deseq", signature("AbsoluteAbundanceData", "Comparator"), function(data, comparator, verbose = c(TRUE, FALSE)) {
-  verbose <- veupathUtils::matchArg(verbose)
+  verbose <- mbioUtils::matchArg(verbose)
 
   recordIdColumn <- data@recordIdColumn
   ancestorIdColumns <- data@ancestorIdColumns
   allIdColumns <- c(recordIdColumn, ancestorIdColumns)
-  sampleMetadata <- veupathUtils::getSampleMetadata(data)
-  comparatorColName <- veupathUtils::getColName(comparator@variable@variableSpec)
+  sampleMetadata <- mbioUtils::getSampleMetadata(data)
+  comparatorColName <- mbioUtils::getColName(comparator@variable@variableSpec)
 
   # First, remove id columns and any columns that are all 0s.
   cleanedData <- purrr::discard(data@data[, -..allIdColumns], function(col) {identical(union(unique(col), c(0, NA)), c(0, NA))})
@@ -137,7 +137,7 @@ setMethod("deseq", signature("AbsoluteAbundanceData", "Comparator"), function(da
   # and ANCOMBC expect the order to match, and will not perform this check.
   if (!identical(rownames(sampleMetadata), colnames(counts))){
     # Reorder sampleMetadata to match counts
-    veupathUtils::logWithTime("Sample order differs between data and metadata. Reordering data based on the metadata sample order.", verbose)
+    mbioUtils::logWithTime("Sample order differs between data and metadata. Reordering data based on the metadata sample order.", verbose)
     data.table::setcolorder(counts, rownames(sampleMetadata))
   }
 
@@ -157,8 +157,8 @@ setMethod("deseq", signature("AbsoluteAbundanceData", "Comparator"), function(da
     deseq_output <- DESeq2::DESeq(dds)
   })
 
-  if (veupathUtils::is.error(deseq_output)) {
-    veupathUtils::logWithTime(paste0('Differential abundance FAILED with parameters recordIdColumn=', recordIdColumn, ', method = DESeq2', ', verbose =', verbose), verbose)
+  if (mbioUtils::is.error(deseq_output)) {
+    mbioUtils::logWithTime(paste0('Differential abundance FAILED with parameters recordIdColumn=', recordIdColumn, ', method = DESeq2', ', verbose =', verbose), verbose)
     stop()
   }
 
@@ -187,13 +187,13 @@ setGeneric("maaslin",
 
 # this leaves room for us to grow into dedicated params (normalization and analysis method etc) for counts if desired
 setMethod("maaslin", signature("AbundanceData", "Comparator"), function(data, comparator, verbose = c(TRUE, FALSE)) {
-  verbose <- veupathUtils::matchArg(verbose)
+  verbose <- mbioUtils::matchArg(verbose)
 
   recordIdColumn <- data@recordIdColumn
   ancestorIdColumns <- data@ancestorIdColumns
   allIdColumns <- c(recordIdColumn, ancestorIdColumns)
-  sampleMetadata <- veupathUtils::getSampleMetadata(data)
-  comparatorColName <- veupathUtils::getColName(comparator@variable@variableSpec)
+  sampleMetadata <- mbioUtils::getSampleMetadata(data)
+  comparatorColName <- mbioUtils::getColName(comparator@variable@variableSpec)
   abundances <- data@data
 
   # First, remove id columns and any columns that are all 0s.
@@ -238,7 +238,7 @@ setMethod("maaslin", signature("AbundanceData", "Comparator"), function(data, co
 #' The default value uses the P_VALUE_FLOOR=1e-200 constant defined in this package.
 #' @param verbose boolean indicating if timed logging is desired
 #' @return ComputeResult object
-#' @import veupathUtils
+#' @import mbioUtils
 #' @import data.table
 #' @import DESeq2
 #' @importFrom Maaslin2 Maaslin2
@@ -260,11 +260,11 @@ setMethod("internalDiffAbund", signature("AbundanceData", "Comparator"), functio
     recordIdColumn <- data@recordIdColumn
     ancestorIdColumns <- data@ancestorIdColumns
     allIdColumns <- c(recordIdColumn, ancestorIdColumns)
-    comparatorColName <- veupathUtils::getColName(comparator@variable@variableSpec)
+    comparatorColName <- mbioUtils::getColName(comparator@variable@variableSpec)
 
     ## Initialize and check inputs
-    method <- veupathUtils::matchArg(method)
-    verbose <- veupathUtils::matchArg(verbose)
+    method <- mbioUtils::matchArg(method)
+    verbose <- mbioUtils::matchArg(verbose)
 
     
     ## Compute differential abundance
@@ -286,7 +286,7 @@ setMethod("internalDiffAbund", signature("AbundanceData", "Comparator"), functio
     } else {
       stop('Unaccepted differential abundance method. Accepted methods are "DESeq2" and "Maaslin2".')
     }
-    veupathUtils::logWithTime(paste0('Completed method=',method,'. Formatting results.'), verbose)
+    mbioUtils::logWithTime(paste0('Completed method=',method,'. Formatting results.'), verbose)
 
     # Sometimes p-values can be very small, even smaller than the smallest representable number (gives p-value=0). The smallest
     # representable number changes based on env, so to avoid inconsistency set a p-value floor so that any
@@ -326,11 +326,11 @@ setMethod("internalDiffAbund", signature("AbundanceData", "Comparator"), functio
 
     # The resulting data should contain only the samples actually used.
     result@data <- data@data[, ..allIdColumns]
-    names(result@data) <- veupathUtils::stripEntityIdFromColumnHeader(names(result@data))
+    names(result@data) <- mbioUtils::stripEntityIdFromColumnHeader(names(result@data))
 
 
     validObject(result)
-    veupathUtils::logWithTime(paste('Differential abundance computation completed with parameters recordIdColumn = ', recordIdColumn,", comparatorColName = ", comparatorColName, ', method = ', method, ', groupA =', getGroupLabels(comparator, "groupA"), ', groupB = ', getGroupLabels(comparator, "groupB")), verbose)
+    mbioUtils::logWithTime(paste('Differential abundance computation completed with parameters recordIdColumn = ', recordIdColumn,", comparatorColName = ", comparatorColName, ', method = ', method, ', groupA =', getGroupLabels(comparator, "groupA"), ', groupB = ', getGroupLabels(comparator, "groupB")), verbose)
     
     return(result)
 })

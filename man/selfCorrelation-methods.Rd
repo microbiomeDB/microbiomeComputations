@@ -34,5 +34,5 @@ ComputeResult object
 }
 \description{
 This function returns correlation coefficients for variables in one AbundanceData object against itself. It generally serves as a
-convenience wrapper around veupathUtils::correlation, with the exception that it additionally supports sparcc.
+convenience wrapper around mbioUtils::correlation, with the exception that it additionally supports sparcc.
 }

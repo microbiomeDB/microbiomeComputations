@@ -11,7 +11,7 @@
 #' @importFrom vegan vegdist
 #' @importFrom ape pcoa
 #' @importFrom stringi stri_replace_all_fixed
-#' @import veupathUtils
+#' @import mbioUtils
 #' @import data.table
 #' @useDynLib microbiomeComputations
 #' @rdname betaDiv-methods
@@ -31,8 +31,8 @@ setMethod("betaDiv", signature("AbundanceData"), function(data, method = c('bray
     allIdColumns <- c(recordIdColumn, ancestorIdColumns)
 
     # Initialize and check inputs
-    method <- veupathUtils::matchArg(method)
-    verbose <- veupathUtils::matchArg(verbose)
+    method <- mbioUtils::matchArg(method)
+    verbose <- mbioUtils::matchArg(verbose)
 
     # Check that incoming df meets requirements - consider moving to a validateOTU function or similar
     if (!'data.table' %in% class(df)) {
@@ -40,7 +40,7 @@ setMethod("betaDiv", signature("AbundanceData"), function(data, method = c('bray
     }
 
     computeMessage <- ''
-    veupathUtils::logWithTime(paste("Received df table with", nrow(df), "samples and", (ncol(df)-1), "taxa."), verbose)
+    mbioUtils::logWithTime(paste("Received df table with", nrow(df), "samples and", (ncol(df)-1), "taxa."), verbose)
 
     # Compute beta diversity using given dissimilarity method
     if (identical(method, 'bray') | identical(method, 'jaccard')) {
@@ -62,11 +62,11 @@ setMethod("betaDiv", signature("AbundanceData"), function(data, method = c('bray
     result@ancestorIdColumns <- ancestorIdColumns
 
     # Handle errors or return positive computeMessage
-    if (veupathUtils::is.error(dist)) {
-      veupathUtils::logWithTime(paste('Beta diversity computation FAILED with parameters method=', method, ', k=', k), verbose)
+    if (mbioUtils::is.error(dist)) {
+      mbioUtils::logWithTime(paste('Beta diversity computation FAILED with parameters method=', method, ', k=', k), verbose)
       stop() 
     } else {
-      veupathUtils::logWithTime("Computed dissimilarity matrix.", verbose)
+      mbioUtils::logWithTime("Computed dissimilarity matrix.", verbose)
       computeMessage <- paste(method, "dissimilarity matrix computation successful.")
     }
 
@@ -80,7 +80,7 @@ setMethod("betaDiv", signature("AbundanceData"), function(data, method = c('bray
 
     dt <- cbind(dt, df[, ..allIdColumns])
     data.table::setcolorder(dt, allIdColumns)
-    veupathUtils::logWithTime("Finished ordination step.", verbose)
+    mbioUtils::logWithTime("Finished ordination step.", verbose)
 
     # Extract percent variance
     eigenvecs <- pcoa$values$Relative_eig
@@ -91,7 +91,7 @@ setMethod("betaDiv", signature("AbundanceData"), function(data, method = c('bray
     # For now returning data and percentVar for how much is in the plot.
     percentVar <- percentVar[1:k]
     
-    entity <- veupathUtils::strSplit(recordIdColumn,".", 4, 1)
+    entity <- mbioUtils::strSplit(recordIdColumn,".", 4, 1)
     result@computationDetails <- paste(computeMessage, ', pcoaVariance =', percentVar)
     result@parameters <- paste('method =', method)   
     
@@ -99,30 +99,30 @@ setMethod("betaDiv", signature("AbundanceData"), function(data, method = c('bray
     displayNames <- paste0(axesNames, " ", sprintf(percentVar,fmt = '%#.1f'), "%")
 
     makeVariableMetadataObject <- function(displayName) {
-      axisName <- veupathUtils::strSplit(displayName, " ")
+      axisName <- mbioUtils::strSplit(displayName, " ")
       #bit hacky, see if you can think of something better
       plotRef <- ifelse(grepl('Axis1', displayName, fixed=T), 'xAxis', 'yAxis')
 
-      veupathUtils::VariableMetadata(
-                 variableClass = veupathUtils::VariableClass(value = "computed"),
-                 variableSpec = veupathUtils::VariableSpec(variableId = axisName, entityId = entity),
-                 plotReference = veupathUtils::PlotReference(value = plotRef),
+      mbioUtils::VariableMetadata(
+                 variableClass = mbioUtils::VariableClass(value = "computed"),
+                 variableSpec = mbioUtils::VariableSpec(variableId = axisName, entityId = entity),
+                 plotReference = mbioUtils::PlotReference(value = plotRef),
                  displayName = displayName,
                  displayRangeMin = min(dt[[axisName]]),
                  displayRangeMax = max(dt[[axisName]]),
-                 dataType = veupathUtils::DataType(value = "NUMBER"),
-                 dataShape = veupathUtils::DataShape(value = "CONTINUOUS")
+                 dataType = mbioUtils::DataType(value = "NUMBER"),
+                 dataShape = mbioUtils::DataShape(value = "CONTINUOUS")
       )
     }
           
-    computedVariableMetadata <- veupathUtils::VariableMetadataList(lapply(displayNames, makeVariableMetadataObject))
+    computedVariableMetadata <- mbioUtils::VariableMetadataList(lapply(displayNames, makeVariableMetadataObject))
 
     result@computedVariableMetadata <- computedVariableMetadata
-    names(dt) <- veupathUtils::stripEntityIdFromColumnHeader(names(dt))
+    names(dt) <- mbioUtils::stripEntityIdFromColumnHeader(names(dt))
     result@data <- dt
 
     validObject(result)
-    veupathUtils::logWithTime(paste('Beta diversity computation completed with parameters recordIdColumn=', recordIdColumn, ', method =', method, ', k =', k, ', verbose =', verbose), verbose)
+    mbioUtils::logWithTime(paste('Beta diversity computation completed with parameters recordIdColumn=', recordIdColumn, ', method =', method, ', k =', k, ', verbose =', verbose), verbose)
     
     return(result)
 })

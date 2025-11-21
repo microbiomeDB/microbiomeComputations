@@ -1,15 +1,15 @@
 test_that('Comparator validation works', {
 
-  groupABinList <- veupathUtils::BinList(
+  groupABinList <- mbioUtils::BinList(
                             S4Vectors::SimpleList(
-                              c(veupathUtils::Bin(
+                              c(mbioUtils::Bin(
                                 binLabel="binA_a"
                               ))
                             )
                           )
-  groupBBinList <- veupathUtils::BinList(
+  groupBBinList <- mbioUtils::BinList(
                             S4Vectors::SimpleList(
-                              c(veupathUtils::Bin(
+                              c(mbioUtils::Bin(
                                 binLabel="binA_b"
                               ))
                             )
@@ -18,24 +18,24 @@ test_that('Comparator validation works', {
   
   # Ensure Comparator has a variableId
   expect_error(microbiomeComputations::Comparator(
-                          variable = veupathUtils::VariableMetadata(
-                            dataShape = veupathUtils::DataShape(value="BINARY")
+                          variable = mbioUtils::VariableMetadata(
+                            dataShape = mbioUtils::DataShape(value="BINARY")
                           ),
                           groupA = groupABinList,
                           groupB = groupBBinList
   ))
 
   # Ensure Comparator has no overlap in groupA and groupB
-  groupBBinList <- veupathUtils::BinList(
+  groupBBinList <- mbioUtils::BinList(
                             S4Vectors::SimpleList(
-                              c(veupathUtils::Bin(
+                              c(mbioUtils::Bin(
                                 binLabel="binA_a"
                               ))
                             )
                           )
   expect_error(microbiomeComputations::Comparator(
-                          variable = veupathUtils::VariableMetadata(
-                            dataShape = veupathUtils::DataShape(value="BINARY")
+                          variable = mbioUtils::VariableMetadata(
+                            dataShape = mbioUtils::DataShape(value="BINARY")
                           ),
                           groupA = groupABinList,
                           groupB = groupBBinList
@@ -43,8 +43,8 @@ test_that('Comparator validation works', {
 
   # Ensure Comparator requires bin starts and ends when variable is continuous
   expect_error(microbiomeComputations::Comparator(
-                          variable = veupathUtils::VariableMetadata(
-                            dataShape = veupathUtils::DataShape(value="CONTINUOUS")
+                          variable = mbioUtils::VariableMetadata(
+                            dataShape = mbioUtils::DataShape(value="CONTINUOUS")
                           ),
                           groupA = groupABinList,
                           groupB = groupBBinList
@@ -52,8 +52,8 @@ test_that('Comparator validation works', {
 
   # Ensure Comparator requires both groupA and groupB
   expect_error(microbiomeComputations::Comparator(
-                          variable = veupathUtils::VariableMetadata(
-                            dataShape = veupathUtils::DataShape(value="CONTINUOUS")
+                          variable = mbioUtils::VariableMetadata(
+                            dataShape = mbioUtils::DataShape(value="CONTINUOUS")
                           ),
                           groupA = groupABinList
   ))
@@ -63,21 +63,21 @@ test_that('Comparator validation works', {
 
 test_that("getGroupLabels returns bin labels", {
   # With a continuous variable
-  bin1 <- veupathUtils::Bin(binStart='2', binEnd='3', binLabel="[2, 3)")
-  bin2 <- veupathUtils::Bin(binStart='3', binEnd='4', binLabel="[3, 4)")
-  bin3 <- veupathUtils::Bin(binStart='4', binEnd='5', binLabel="[4, 5)")
-  bin4 <- veupathUtils::Bin(binStart='5', binEnd='6', binLabel="[5, 6)")
+  bin1 <- mbioUtils::Bin(binStart='2', binEnd='3', binLabel="[2, 3)")
+  bin2 <- mbioUtils::Bin(binStart='3', binEnd='4', binLabel="[3, 4)")
+  bin3 <- mbioUtils::Bin(binStart='4', binEnd='5', binLabel="[4, 5)")
+  bin4 <- mbioUtils::Bin(binStart='5', binEnd='6', binLabel="[5, 6)")
 
-  groupABins <- veupathUtils::BinList(S4Vectors::SimpleList(c(bin1, bin2)))
-  groupBBins <- veupathUtils::BinList(S4Vectors::SimpleList(c(bin3, bin4)))
+  groupABins <- mbioUtils::BinList(S4Vectors::SimpleList(c(bin1, bin2)))
+  groupBBins <- mbioUtils::BinList(S4Vectors::SimpleList(c(bin3, bin4)))
 
   comparatorVariable <- microbiomeComputations::Comparator(
-                          variable = veupathUtils::VariableMetadata(
+                          variable = mbioUtils::VariableMetadata(
                             variableSpec = VariableSpec(
                               variableId = 'contA',
                               entityId = 'entity'
                             ),
-                            dataShape = veupathUtils::DataShape(value="CONTINUOUS")
+                            dataShape = mbioUtils::DataShape(value="CONTINUOUS")
                           ),
                           groupA = groupABins,
                           groupB = groupBBins

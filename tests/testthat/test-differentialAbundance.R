@@ -33,23 +33,23 @@ test_that('internalDiffAbund returns a correctly formatted data.table', {
 
   # A Binary comparator variable
   comparatorVariable <- microbiomeComputations::Comparator(
-                          variable = veupathUtils::VariableMetadata(
+                          variable = mbioUtils::VariableMetadata(
                             variableSpec = VariableSpec(
                               variableId = 'binA',
                               entityId = 'entity'
                             ),
-                            dataShape = veupathUtils::DataShape(value="BINARY")
+                            dataShape = mbioUtils::DataShape(value="BINARY")
                           ),
-                          groupA = veupathUtils::BinList(
+                          groupA = mbioUtils::BinList(
                             S4Vectors::SimpleList(
-                              c(veupathUtils::Bin(
+                              c(mbioUtils::Bin(
                                 binLabel="binA_a"
                               ))
                             )
                           ),
-                          groupB = veupathUtils::BinList(
+                          groupB = mbioUtils::BinList(
                             S4Vectors::SimpleList(
-                              c(veupathUtils::Bin(
+                              c(mbioUtils::Bin(
                                 binLabel="binA_b"
                               ))
                             )
@@ -71,23 +71,23 @@ test_that('internalDiffAbund returns a correctly formatted data.table', {
 
   # When defined groups end up subsetting the incoming data
     comparatorVariable <- microbiomeComputations::Comparator(
-                          variable = veupathUtils::VariableMetadata(
+                          variable = mbioUtils::VariableMetadata(
                             variableSpec = VariableSpec(
                               variableId = 'cat4',
                               entityId = 'entity'
                             ),
-                            dataShape = veupathUtils::DataShape(value="CATEGORICAL")
+                            dataShape = mbioUtils::DataShape(value="CATEGORICAL")
                           ),
-                          groupA = veupathUtils::BinList(
+                          groupA = mbioUtils::BinList(
                             S4Vectors::SimpleList(
-                              c(veupathUtils::Bin(
+                              c(mbioUtils::Bin(
                                 binLabel="cat4_a"
                               ))
                             )
                           ),
-                          groupB = veupathUtils::BinList(
+                          groupB = mbioUtils::BinList(
                             S4Vectors::SimpleList(
-                              c(veupathUtils::Bin(
+                              c(mbioUtils::Bin(
                                 binLabel="cat4_b"
                               ))
                             )
@@ -108,21 +108,21 @@ test_that('internalDiffAbund returns a correctly formatted data.table', {
 
 
   # With a continuous variable
-  bin1 <- veupathUtils::Bin(binStart='2', binEnd='3', binLabel="[2, 3)")
-  bin2 <- veupathUtils::Bin(binStart='3', binEnd='4', binLabel="[3, 4)")
-  bin3 <- veupathUtils::Bin(binStart='4', binEnd='5', binLabel="[4, 5)")
-  bin4 <- veupathUtils::Bin(binStart='5', binEnd='6', binLabel="[5, 6)")
+  bin1 <- mbioUtils::Bin(binStart='2', binEnd='3', binLabel="[2, 3)")
+  bin2 <- mbioUtils::Bin(binStart='3', binEnd='4', binLabel="[3, 4)")
+  bin3 <- mbioUtils::Bin(binStart='4', binEnd='5', binLabel="[4, 5)")
+  bin4 <- mbioUtils::Bin(binStart='5', binEnd='6', binLabel="[5, 6)")
 
-  groupABins <- veupathUtils::BinList(S4Vectors::SimpleList(c(bin1, bin2)))
-  groupBBins <- veupathUtils::BinList(S4Vectors::SimpleList(c(bin3, bin4)))
+  groupABins <- mbioUtils::BinList(S4Vectors::SimpleList(c(bin1, bin2)))
+  groupBBins <- mbioUtils::BinList(S4Vectors::SimpleList(c(bin3, bin4)))
 
   comparatorVariable <- microbiomeComputations::Comparator(
-                          variable = veupathUtils::VariableMetadata(
+                          variable = mbioUtils::VariableMetadata(
                             variableSpec = VariableSpec(
                               variableId = 'contA',
                               entityId = 'entity'
                             ),
-                            dataShape = veupathUtils::DataShape(value="CONTINUOUS")
+                            dataShape = mbioUtils::DataShape(value="CONTINUOUS")
                           ),
                           groupA = groupABins,
                           groupB = groupBBins
@@ -148,12 +148,12 @@ test_that('internalDiffAbund returns a correctly formatted data.table', {
   groupBBins <- BinList(S4Vectors::SimpleList(c(bin3, bin4)))
 
   comparatorVariable <- microbiomeComputations::Comparator(
-                          variable = veupathUtils::VariableMetadata(
+                          variable = mbioUtils::VariableMetadata(
                             variableSpec = VariableSpec(
                               variableId = 'dateA',
                               entityId = 'entity'
                             ),
-                            dataShape = veupathUtils::DataShape(value="CONTINUOUS")
+                            dataShape = mbioUtils::DataShape(value="CONTINUOUS")
                           ),
                           groupA = groupABins,
                           groupB = groupBBins
@@ -206,27 +206,27 @@ test_that("internalDiffAbund can handle messy inputs", {
 
   # With only some comparisonVariable values found in the metadata
   comparatorVariable <- microbiomeComputations::Comparator(
-                          variable = veupathUtils::VariableMetadata(
+                          variable = mbioUtils::VariableMetadata(
                             variableSpec = VariableSpec(
                               variableId = 'cat4',
                               entityId = 'entity'
                             ),
-                            dataShape = veupathUtils::DataShape(value="CATEGORICAL")
+                            dataShape = mbioUtils::DataShape(value="CATEGORICAL")
                           ),
-                          groupA = veupathUtils::BinList(
+                          groupA = mbioUtils::BinList(
                             S4Vectors::SimpleList(
-                              c(veupathUtils::Bin(
+                              c(mbioUtils::Bin(
                                 binLabel="cat4_a"
-                              ), veupathUtils::Bin(
+                              ), mbioUtils::Bin(
                                 binLabel="cat4_c"
                               ))
                             )
                           ),
-                          groupB = veupathUtils::BinList(
+                          groupB = mbioUtils::BinList(
                             S4Vectors::SimpleList(
-                              c(veupathUtils::Bin(
+                              c(mbioUtils::Bin(
                                 binLabel="cat4_b"
-                              ), veupathUtils::Bin(
+                              ), mbioUtils::Bin(
                                 binLabel="test"
                               ))
                             )
@@ -247,21 +247,21 @@ test_that("internalDiffAbund can handle messy inputs", {
 
 
   # With a continuous variable that has NAs
-  bin1 <- veupathUtils::Bin(binStart='2', binEnd='3', binLabel="[2, 3)")
-  bin2 <- veupathUtils::Bin(binStart='3', binEnd='4', binLabel="[3, 4)")
-  bin3 <- veupathUtils::Bin(binStart='4', binEnd='5', binLabel="[4, 5)")
-  bin4 <- veupathUtils::Bin(binStart='5', binEnd='6', binLabel="[5, 6)")
+  bin1 <- mbioUtils::Bin(binStart='2', binEnd='3', binLabel="[2, 3)")
+  bin2 <- mbioUtils::Bin(binStart='3', binEnd='4', binLabel="[3, 4)")
+  bin3 <- mbioUtils::Bin(binStart='4', binEnd='5', binLabel="[4, 5)")
+  bin4 <- mbioUtils::Bin(binStart='5', binEnd='6', binLabel="[5, 6)")
 
-  groupABins <- veupathUtils::BinList(S4Vectors::SimpleList(c(bin1, bin2)))
-  groupBBins <- veupathUtils::BinList(S4Vectors::SimpleList(c(bin3, bin4)))
+  groupABins <- mbioUtils::BinList(S4Vectors::SimpleList(c(bin1, bin2)))
+  groupBBins <- mbioUtils::BinList(S4Vectors::SimpleList(c(bin3, bin4)))
 
   comparatorVariable <- microbiomeComputations::Comparator(
-                          variable = veupathUtils::VariableMetadata(
+                          variable = mbioUtils::VariableMetadata(
                             variableSpec = VariableSpec(
                               variableId = 'contA',
                               entityId = 'entity'
                             ),
-                            dataShape = veupathUtils::DataShape(value="CONTINUOUS")
+                            dataShape = mbioUtils::DataShape(value="CONTINUOUS")
                           ),
                           groupA = groupABins,
                           groupB = groupBBins
@@ -280,20 +280,20 @@ test_that("internalDiffAbund can handle messy inputs", {
 
 
   # With a categorical variable that has NAs
-  bin1 <- veupathUtils::Bin(binLabel="cat4_a")
-  bin2 <- veupathUtils::Bin(binLabel="cat4_b")
-  bin3 <- veupathUtils::Bin(binLabel="cat4_c")
+  bin1 <- mbioUtils::Bin(binLabel="cat4_a")
+  bin2 <- mbioUtils::Bin(binLabel="cat4_b")
+  bin3 <- mbioUtils::Bin(binLabel="cat4_c")
 
-  groupABins <- veupathUtils::BinList(S4Vectors::SimpleList(c(bin1, bin2)))
-  groupBBins <- veupathUtils::BinList(S4Vectors::SimpleList(c(bin3)))
+  groupABins <- mbioUtils::BinList(S4Vectors::SimpleList(c(bin1, bin2)))
+  groupBBins <- mbioUtils::BinList(S4Vectors::SimpleList(c(bin3)))
 
   comparatorVariable <- microbiomeComputations::Comparator(
-                          variable = veupathUtils::VariableMetadata(
+                          variable = mbioUtils::VariableMetadata(
                             variableSpec = VariableSpec(
                               variableId = 'cat4',
                               entityId = 'entity'
                             ),
-                            dataShape = veupathUtils::DataShape(value="CATEGORICAL")
+                            dataShape = mbioUtils::DataShape(value="CATEGORICAL")
                           ),
                           groupA = groupABins,
                           groupB = groupBBins
@@ -342,23 +342,23 @@ test_that("internalDiffAbund returns a ComputeResult with the correct slots" , {
               recordIdColumn = 'entity.SampleID')
 
   comparatorVariable <- microbiomeComputations::Comparator(
-                          variable = veupathUtils::VariableMetadata(
+                          variable = mbioUtils::VariableMetadata(
                             variableSpec = VariableSpec(
                               variableId = 'binA',
                               entityId = 'entity'
                             ),
-                            dataShape = veupathUtils::DataShape(value="BINARY")
+                            dataShape = mbioUtils::DataShape(value="BINARY")
                           ),
-                          groupA = veupathUtils::BinList(
+                          groupA = mbioUtils::BinList(
                             S4Vectors::SimpleList(
-                              c(veupathUtils::Bin(
+                              c(mbioUtils::Bin(
                                 binLabel="binA_a"
                               ))
                             )
                           ),
-                          groupB = veupathUtils::BinList(
+                          groupB = mbioUtils::BinList(
                             S4Vectors::SimpleList(
-                              c(veupathUtils::Bin(
+                              c(mbioUtils::Bin(
                                 binLabel="binA_b"
                               ))
                             )
@@ -403,19 +403,19 @@ test_that("internalDiffAbund fails with improper inputs", {
 
   
   # Fail when bins in Group A and Group B overlap
-  bin1 <- veupathUtils::Bin(binStart=2, binEnd=3, binLabel="[2, 3)")
-  bin2 <- veupathUtils::Bin(binStart=3, binEnd=4, binLabel="[3, 4)")
-  bin3 <- veupathUtils::Bin(binStart=3, binEnd=5, binLabel="[3, 5)")
-  bin4 <- veupathUtils::Bin(binStart=5, binEnd=6, binLabel="[5, 6)")
+  bin1 <- mbioUtils::Bin(binStart=2, binEnd=3, binLabel="[2, 3)")
+  bin2 <- mbioUtils::Bin(binStart=3, binEnd=4, binLabel="[3, 4)")
+  bin3 <- mbioUtils::Bin(binStart=3, binEnd=5, binLabel="[3, 5)")
+  bin4 <- mbioUtils::Bin(binStart=5, binEnd=6, binLabel="[5, 6)")
   groupABins <- BinList(S4Vectors::SimpleList(c(bin1, bin2)))
   groupBBins <- BinList(S4Vectors::SimpleList(c(bin3, bin4)))
   comparatorVariable <- microbiomeComputations::Comparator(
-                          variable = veupathUtils::VariableMetadata(
+                          variable = mbioUtils::VariableMetadata(
                             variableSpec = VariableSpec(
                               variableId = 'contA',
                               entityId = 'entity'
                             ),
-                            dataShape = veupathUtils::DataShape(value="CONTINUOUS")
+                            dataShape = mbioUtils::DataShape(value="CONTINUOUS")
                           ),
                           groupA = groupABins,
                           groupB = groupBBins
@@ -444,23 +444,23 @@ test_that("internalDiffAbund catches DESeq2 errors", {
   )
 
   comparatorVariable <- microbiomeComputations::Comparator(
-                          variable = veupathUtils::VariableMetadata(
+                          variable = mbioUtils::VariableMetadata(
                             variableSpec = VariableSpec(
                               variableId = 'binA',
                               entityId = 'entity'
                             ),
-                            dataShape = veupathUtils::DataShape(value="BINARY")
+                            dataShape = mbioUtils::DataShape(value="BINARY")
                           ),
-                          groupA = veupathUtils::BinList(
+                          groupA = mbioUtils::BinList(
                             S4Vectors::SimpleList(
-                              c(veupathUtils::Bin(
+                              c(mbioUtils::Bin(
                                 binLabel="binA_a"
                               ))
                             )
                           ),
-                          groupB = veupathUtils::BinList(
+                          groupB = mbioUtils::BinList(
                             S4Vectors::SimpleList(
-                              c(veupathUtils::Bin(
+                              c(mbioUtils::Bin(
                                 binLabel="binA_b"
                               ))
                             )
@@ -515,23 +515,23 @@ test_that("internalDiffAbund method Maaslin2 does stuff",{
   )
 
   comparatorVariable <- microbiomeComputations::Comparator(
-                          variable = veupathUtils::VariableMetadata(
+                          variable = mbioUtils::VariableMetadata(
                             variableSpec = VariableSpec(
                               variableId = 'cat4',
                               entityId = 'entity'
                             ),
-                            dataShape = veupathUtils::DataShape(value="CATEGORICAL")
+                            dataShape = mbioUtils::DataShape(value="CATEGORICAL")
                           ),
-                          groupA = veupathUtils::BinList(
+                          groupA = mbioUtils::BinList(
                             S4Vectors::SimpleList(
-                              c(veupathUtils::Bin(
+                              c(mbioUtils::Bin(
                                 binLabel="cat4_a"
                               ))
                             )
                           ),
-                          groupB = veupathUtils::BinList(
+                          groupB = mbioUtils::BinList(
                             S4Vectors::SimpleList(
-                              c(veupathUtils::Bin(
+                              c(mbioUtils::Bin(
                                 binLabel="cat4_b"
                               ))
                             )
@@ -586,23 +586,23 @@ test_that("toJSON for internalDiffAbundResult works",{
   )
 
   comparatorVariable <- microbiomeComputations::Comparator(
-                          variable = veupathUtils::VariableMetadata(
+                          variable = mbioUtils::VariableMetadata(
                             variableSpec = VariableSpec(
                               variableId = 'binA',
                               entityId = 'entity'
                             ),
-                            dataShape = veupathUtils::DataShape(value="CATEGORICAL")
+                            dataShape = mbioUtils::DataShape(value="CATEGORICAL")
                           ),
-                          groupA = veupathUtils::BinList(
+                          groupA = mbioUtils::BinList(
                             S4Vectors::SimpleList(
-                              c(veupathUtils::Bin(
+                              c(mbioUtils::Bin(
                                 binLabel="binA_a"
                               ))
                             )
                           ),
-                          groupB = veupathUtils::BinList(
+                          groupB = mbioUtils::BinList(
                             S4Vectors::SimpleList(
-                              c(veupathUtils::Bin(
+                              c(mbioUtils::Bin(
                                 binLabel="binA_b"
                               ))
                             )
@@ -654,23 +654,23 @@ test_that("The smallest pvalue we can get is our p value floor", {
 
   # A Binary comparator variable
   comparatorVariable <- microbiomeComputations::Comparator(
-                          variable = veupathUtils::VariableMetadata(
+                          variable = mbioUtils::VariableMetadata(
                             variableSpec = VariableSpec(
                               variableId = 'binA',
                               entityId = 'entity'
                             ),
-                            dataShape = veupathUtils::DataShape(value="BINARY")
+                            dataShape = mbioUtils::DataShape(value="BINARY")
                           ),
-                          groupA = veupathUtils::BinList(
+                          groupA = mbioUtils::BinList(
                             S4Vectors::SimpleList(
-                              c(veupathUtils::Bin(
+                              c(mbioUtils::Bin(
                                 binLabel="binA_a"
                               ))
                             )
                           ),
-                          groupB = veupathUtils::BinList(
+                          groupB = mbioUtils::BinList(
                             S4Vectors::SimpleList(
-                              c(veupathUtils::Bin(
+                              c(mbioUtils::Bin(
                                 binLabel="binA_b"
                               ))
                             )
@@ -723,15 +723,15 @@ test_that("internalDiffAbund fails if comparator has one value", {
   )
 
   comparatorVariable <- microbiomeComputations::Comparator(
-    variable = veupathUtils::VariableMetadata(
+    variable = mbioUtils::VariableMetadata(
       variableSpec = VariableSpec(
         variableId = 'binA',
         entityId = 'entity'
       ),
-      dataShape = veupathUtils::DataShape(value="BINARY")
+      dataShape = mbioUtils::DataShape(value="BINARY")
     ),
-    groupA = veupathUtils::BinList(S4Vectors::SimpleList(c(veupathUtils::Bin(binLabel="binA")))),
-    groupB = veupathUtils::BinList(S4Vectors::SimpleList(c(veupathUtils::Bin(binLabel="binB"))))
+    groupA = mbioUtils::BinList(S4Vectors::SimpleList(c(mbioUtils::Bin(binLabel="binA")))),
+    groupB = mbioUtils::BinList(S4Vectors::SimpleList(c(mbioUtils::Bin(binLabel="binB"))))
   )
 
   expect_error(internalDiffAbund(testData, comparator=comparatorVariable, method='DESeq2', verbose=F))

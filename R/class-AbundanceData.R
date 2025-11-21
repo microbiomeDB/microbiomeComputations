@@ -37,7 +37,7 @@ check_abundance_data <- function(object) {
 #' @slot removeEmptyRecords A logical indicating whether empty (all NA/ zero) samples should be removed.
 #' @name AbundanceData-class
 #' @rdname AbundanceData-class
-#' @importFrom veupathUtils SampleMetadata
-#' @importFrom veupathUtils CollectionWithMetadata
+#' @importFrom mbioUtils SampleMetadata
+#' @importFrom mbioUtils CollectionWithMetadata
 #' @export 
 AbundanceData <- setClass("AbundanceData", contains = "CollectionWithMetadata", validity = check_abundance_data)
