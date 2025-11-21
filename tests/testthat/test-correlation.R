@@ -14,7 +14,7 @@ test_that("correlation returns an appropriately structured result for assay agai
   df <- df[, c("entity.SampleID", keepCols), with = FALSE]
 
   nSamples <- dim(df)[1]
-  sampleMetadata <- veupathUtils::SampleMetadata(
+  sampleMetadata <- mbioUtils::SampleMetadata(
     data = data.frame(list(
       "entity.SampleID" = df[["entity.SampleID"]],
       "entity.contA" = rnorm(nSamples),
