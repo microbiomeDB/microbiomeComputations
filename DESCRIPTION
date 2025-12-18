@@ -27,7 +27,7 @@ Imports:
 Depends:
     R (>= 2.10)
 Remotes:
-    VEuPathDB/veupathUtils,
+    VEuPathDB/veupathUtils@v2.9.0,
     bioc::3.22/Maaslin2
 LinkingTo: Rcpp
 URL: https://github.com/microbiomeDB/microbiomeComputations, https://microbiomedb.github.io/microbiomeComputations/
