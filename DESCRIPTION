@@ -1,6 +1,6 @@
 Package: microbiomeComputations
 Title: Compute Results for Microbiome Analyses
-Version: 5.1.7
+Version: 5.2.0
 Authors@R: 
     c(person(given = "Danielle",
            family = "Callan",
@@ -20,7 +20,6 @@ Imports:
     purrr,
     Rcpp (>= 0.11.0),
     S4Vectors,
-    SpiecEasi (>= 1.0.7),
     stringi,
     vegan,
     mbioUtils (>= 0.1.0)
@@ -28,7 +27,7 @@ Depends:
     R (>= 2.10)
 Remotes:
     microbiomeDB/mbioUtils,
-    zdk123/SpiecEasi@v1.0.7
+    bioc::3.22/Maaslin2
 biocViews:
 LinkingTo: Rcpp
 URL: https://github.com/microbiomeDB/microbiomeComputations, https://microbiomedb.github.io/microbiomeComputations/
@@ -39,6 +38,7 @@ Encoding: UTF-8
 LazyData: true
 Roxygen: list(markdown = TRUE)
 RoxygenNote: 7.3.3
+BiocViews:
 Suggests: 
     testthat (>= 3.0.0)
 Config/testthat/edition: 3
