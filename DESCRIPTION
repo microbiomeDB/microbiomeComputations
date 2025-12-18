@@ -1,6 +1,6 @@
 Package: microbiomeComputations
 Title: Compute Results for Microbiome Analyses
-Version: 5.1.6
+Version: 5.1.6.1
 Authors@R: 
     c(person(given = "Danielle",
            family = "Callan",
@@ -27,7 +27,8 @@ Imports:
 Depends:
     R (>= 2.10)
 Remotes:
-    VEuPathDB/veupathUtils
+    VEuPathDB/veupathUtils,
+    bioc::3.22/Maaslin2
 LinkingTo: Rcpp
 URL: https://github.com/microbiomeDB/microbiomeComputations, https://microbiomedb.github.io/microbiomeComputations/
 BugReports: https://github.com/microbiomeDB/microbiomeComputations/issues
@@ -37,6 +38,7 @@ Encoding: UTF-8
 LazyData: true
 Roxygen: list(markdown = TRUE)
 RoxygenNote: 7.3.1
+BiocViews:
 Suggests: 
     testthat (>= 3.0.0)
 Config/testthat/edition: 3
