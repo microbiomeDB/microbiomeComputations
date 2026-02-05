@@ -1,6 +1,6 @@
 Package: microbiomeComputations
 Title: Compute Results for Microbiome Analyses
-Version: 5.1.6.4
+Version: 5.1.6.5
 Authors@R: 
     c(person(given = "Danielle",
            family = "Callan",
@@ -23,12 +23,11 @@ Imports:
     SpiecEasi,
     stringi,
     vegan,
-    veupathUtils (>= 2.7.0)
+    veupathUtils (>= 2.11.1)
 Depends:
     R (>= 2.10)
 Remotes:
-    VEuPathDB/veupathUtils@v2.9.0,
-    bioc::3.22/GenomeInfoDb,
+    VEuPathDB/veupathUtils@v2.11.1,
     bioc::3.22/DESeq2,
     bioc::3.22/Maaslin2
 Comment: GenomeInfoDb is explicitly listed in Remotes to ensure Seqinfo (a
